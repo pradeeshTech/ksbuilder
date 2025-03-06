@@ -18,7 +18,7 @@ export default function Dashboard() {
             }
         >
             <Head title="Dashboard" />
-            <div className=" bg-[#fff] py-4  border-[1px] border-gray-400 ">
+            <div className=" bg-[#fff] py-4 !h-[100%] ">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-2">
                     <HomePage />
                 </div>

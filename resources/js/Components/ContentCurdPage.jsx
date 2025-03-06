@@ -1,12 +1,38 @@
 import { useState, useRef, useEffect } from "react";
+import MainPage from "@/Components/mainPage";
+import AboutUs from "@/Components/AboutUs";
+import home from "@/json/home.json";
 
 export default function HomePage() {
   const [edit, setEdit] = useState(true);
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const [isOpen, setIsOpen] = useState(true); // Added modal open state
+  const [isOpen, setIsOpen] = useState(false); // Added modal open state
 
   const modalRef = useRef();
+
+  let curd_json = {
+    page_type:"home",
+    page_section:1,
+    title:"",
+    Description_or_paragraph:"",
+    url:"",
+    file_type:"img",
+    img_or_video:"content",
+    id:1,
+  }
+
+  const navbar = [
+    { name: "HOME", },
+    { name: "ABOUT US" },
+    { name: "SERVICES" },
+    { name: "PROJECTS" },
+    { name: "GROUP & DIVISIONS" },
+    { name: "CONTACT US" },
+    { name: "STAFF ACCESS" }
+  ]
+
+  const [activeIndex,setActiveIndex] = useState(0);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -39,19 +65,63 @@ export default function HomePage() {
 
 //   if (!isOpen) return null; // Prevents rendering when closed
 
+function tabIndex(data){
+  let format = {
+    0:<MainPage  Section1={home?.firstSection1} Section2={home?.secondSection} />,
+    1: <AboutUs />
+  }
+ return format[data]
+}
+
   return (
     <div className="h-[100%]">
       <div className="w-[100%] flex justify-between items-center my-2">
       <div className=" flex justify-start items-center " >
-        <ul className=" space-x-2  flex justify-start items-center   " >
-          <li>HOME</li>
-          <li>ABOUT US</li>
-          <li>SERVICES</li>
-          <li>PROJECTS</li>
-          <li>GROUP & DIVISIONS</li>
-          <li>CONTACT US</li>
-          <li>STAFF ACCESS</li>
-        </ul>
+    <ul className=" flex justify-start cursor-pointer items-center space-x-6 bg-[#2d2d2d] text-white rounded-lg p-4 " >
+      <li
+        className={activeIndex === 0 ? "border-b-[2px] border-blue-200" : ""}
+        onClick={() => setActiveIndex(0)}
+      >
+        HOME
+      </li>
+      <li
+        className={activeIndex === 1 ? "border-b-[2px] border-blue-200" : ""}
+        onClick={() => setActiveIndex(1)}
+      >
+        ABOUT US
+      </li>
+      <li
+        className={activeIndex === 2 ? "border-b-[2px] border-blue-200" : ""}
+        onClick={() => setActiveIndex(2)}
+      >
+        SERVICES
+      </li>
+      <li
+        className={activeIndex === 3 ? "border-b-[2px] border-blue-200" : ""}
+        onClick={() => setActiveIndex(3)}
+      >
+        PROJECTS
+      </li>
+      <li
+        className={activeIndex === 4 ? "border-b-[2px] border-blue-200" : ""}
+        onClick={() => setActiveIndex(4)}
+      >
+        GROUP & DIVISIONS
+      </li>
+      <li
+        className={activeIndex === 5 ? "border-b-[2px] border-blue-200" : ""}
+        onClick={() => setActiveIndex(5)}
+      >
+        CONTACT US
+      </li>
+      <li
+        className={activeIndex === 6 ? "border-b-[2px] border-blue-200" : ""}
+        onClick={() => setActiveIndex(6)}
+      >
+        STAFF ACCESS
+      </li>
+    </ul>
+ 
       </div>
 
       <div className=" flex justify-center items-center " >
@@ -68,6 +138,11 @@ export default function HomePage() {
           Save
         </button>
         </div>
+      </div>
+
+
+      <div>
+        {tabIndex(activeIndex)}
       </div>
 
 
