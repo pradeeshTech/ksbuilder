@@ -1,6 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import MainPage from "@/Components/mainPage";
 import AboutUs from "@/Components/AboutUs";
+import Services from "@/Components/Services";
+import Projects from "@/Components/Projects";
+import GroupDivisions from "@/Components/Group&Divisions";
+import ContactUs from "@/Components/ContactUs";
+import StaffAccess from "@/Components/Staff&Access";
 import home from "@/json/home.json";
 
 export default function HomePage() {
@@ -68,7 +73,12 @@ export default function HomePage() {
 function tabIndex(data){
   let format = {
     0:<MainPage  Section1={home?.firstSection1} Section2={home?.secondSection} />,
-    1: <AboutUs />
+    1: <AboutUs />,
+    2:<Services/>,
+    3:<Projects/>,
+    4:<GroupDivisions/>,
+    5:<ContactUs/>,
+    6:<StaffAccess/>,
   }
  return format[data]
 }
