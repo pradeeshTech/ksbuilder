@@ -4,7 +4,7 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
 
   }
   return (
-    <div className="" >
+    <div className=" px-[5%]" >
       {/* 1 section */}
       <h1 className=" text-[24px] font-semibold my-2 " >1 Section</h1>
       <div>

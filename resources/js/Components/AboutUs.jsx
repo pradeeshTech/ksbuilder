@@ -11,7 +11,7 @@ export default function AboutUs() {
          </div>
          <div class="breadcrumb mb-[40px]">
             <a href="#" className=" font-semibold " >KSK BUILDER</a>
-            <span  className=" font-semibold ">SERVICES</span>
+            <span  className=" font-semibold ">ABOUT US</span>
          </div>
          <div className=" grid grid-cols-3 h-[240px] gap-10 my-[20px] px-[5%]  " >
             <div className=" text-start " >
