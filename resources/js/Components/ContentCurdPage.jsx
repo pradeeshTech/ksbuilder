@@ -87,7 +87,7 @@ function tabIndex(data){
     <div className="h-[100%]">
       <div className="w-[100%] flex justify-between items-center my-2">
       <div className=" flex justify-start items-center " >
-    <ul className=" flex justify-start cursor-pointer items-center space-x-6 bg-[#2d2d2d] text-white rounded-lg p-4 " >
+    <ul className=" flex justify-start cursor-pointer items-center space-x-6 bg-blue-400 text-white rounded-lg p-4 " >
       <li
         className={activeIndex === 0 ? "border-b-[2px] border-blue-200" : ""}
         onClick={() => setActiveIndex(0)}
