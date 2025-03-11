@@ -1,13 +1,13 @@
-import { useState } from "react"
+// import { useState } from "react"
 
 
 export default function AboutUs() {
-   let [isEdit,setIsEdit]  = useState();
+   // let [isEdit,setIsEdit]  = useState();
    return (
       <div >
          <div className=" relative my-[20px] flex justify-center items-center h-[40px] px-[5%] " >
             <h1 className=" text-[30px] text-[#333333] font-semibold  " >ABOUT US</h1>
-         <button className="" >Edit</button>
+         {/* <button className="" >Edit</button> */}
          </div>
          <div class="breadcrumb mb-[40px]">
             <a href="#" className=" font-semibold " >KSK BUILDER</a>

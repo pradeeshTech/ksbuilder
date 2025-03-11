@@ -1,7 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 *{
-      font-family: "Poppins", sans-serif;
+      /* font-family: "Poppins", sans-serif; */
+      font-family: "Mulish", sans-serif;
+
 }
 
 .breadcrumb {
@@ -46,14 +49,26 @@
   }
 
   .navigation{
-      background: #0b6ab5 linear-gradient(to bottom, #0b6ab5, #0058a3);
-    background-color: rgb(11, 106, 181);
-    background-position-x: 0%;
-    background-position-y: 0%;
-    background-repeat: repeat;
-    background-attachment: scroll;
-    background-image: linear-gradient(rgb(11, 106, 181), rgb(0, 88, 163));
-    background-size: auto;
-    background-origin: padding-box;
-    background-clip: border-box;
+      /* background: #0b6ab5 linear-gradient(to bottom, #0b6ab5, #0058a3); */
+    /* background-color: rgb(11, 106, 181); */
+    /* background-position-x: 0%; */
+    /* background-position-y: 0%; */
+    /* background-repeat: repeat; */
+    /* background-attachment: scroll; */
+    /* background-image: linear-gradient(rgb(11, 106, 181), rgb(0, 88, 163)); */
+    /* background-size: auto; */
+    /* background-origin: padding-box; */
+    /* background-clip: border-box; */
+
+    background: #0b6ab5 linear-gradient(to bottom, #0b6ab5, #0058a3);
+        background-image: linear-gradient(rgb(11, 106, 181), rgb(0, 88, 163));
+        background-position-x: initial;
+        background-position-y: initial;
+        background-size: initial;
+        background-repeat: initial;
+        background-attachment: initial;
+        background-origin: initial;
+        background-clip: initial;
+        background-color: rgb(11, 106, 181);
+        font-family: Muli;
   }
