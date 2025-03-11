@@ -7,6 +7,8 @@ import GroupDivisions from "@/Components/Group&Divisions";
 import ContactUs from "@/Components/ContactUs";
 import StaffAccess from "@/Components/Staff&Access";
 import home from "@/json/home.json";
+import DynamicForm from "@/Components/PopUp";
+import formSchema from "@/json/formSchema";
 
 export default function HomePage() {
   const [edit, setEdit] = useState(true);
@@ -83,6 +85,14 @@ function tabIndex(data){
  return format[data]
 }
 
+function formRendering(key){
+  let format ={
+    0:formSchema?.home1
+  }
+
+  return format[key]
+}
+
   return (
     <div className="h-[100%]">
       <div className="w-[100%] flex justify-between items-center my-2">
@@ -134,7 +144,7 @@ function tabIndex(data){
  
       </div>
 
-      <div className=" flex justify-center items-center " >
+      <div className="flex justify-center items-center " >
         <button
           className="bg-blue-300 text-black rounded-[24px] text-[12px] w-[80px] h-[35px] mx-2"
           onClick={() => setIsOpen(true)}
@@ -147,15 +157,14 @@ function tabIndex(data){
         >
           Save
         </button>
-        </div>
       </div>
-
+      </div>
 
       <div>
         {tabIndex(activeIndex)}
       </div>
 
-
+      {<DynamicForm formSchema={formRendering(0)} />}
 
       {/* Modal */}
       {isOpen &&

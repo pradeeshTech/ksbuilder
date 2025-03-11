@@ -1,0 +1,25 @@
+{
+      "home1":[
+            {
+                  "name": "type",
+                  "type": "select",
+                  "label": "Select Section Type",
+                  "options": [
+                 { "value": 0, "label": "" },
+                 { "value": "video", "label": "Video"}
+                  ]
+                },
+      { "name": "title", "type": "text", "label": "Title", "placeholder": "Enter title" },
+      { "name": "description", "type": "textarea", "label": "Description", "placeholder": "Enter description" },
+      { "name": "url", "type": "text", "label": "URL / Example", "placeholder": "Enter URL" },
+      {
+        "name": "type",
+        "type": "select",
+        "label": "Select Type",
+        "options": [
+       { "value": "img", "label": "Image" },
+       { "value": "video", "label": "Video" }
+        ]
+      },
+      { "name": "file", "type": "file", "label": "Upload Image/Video" }]
+}
