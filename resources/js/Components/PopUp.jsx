@@ -1,26 +1,11 @@
 import { useState } from "react";
-// 
-// const formSchema = [
-//   { name: "title", type: "text", label: "Title", placeholder: "Enter title" },
-//   { name: "description", type: "textarea", label: "Description", placeholder: "Enter description" },
-//   { name: "url", type: "text", label: "URL / Example", placeholder: "Enter URL" },
-//   {
-//     name: "type",
-//     type: "select",
-//     label: "Select Type",
-//     options: [
-      // { value: "img", label: "Image" },
-      // { value: "video", label: "Video" },
-//     ],
-//   },
-//   { name: "file", type: "file", label: "Upload Image/Video" },
-// ];
-// 
-export default function DynamicForm({formSchema}) {
+
+export default function DynamicForm({ formSchema }) {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({});
   const [previewUrl, setPreviewUrl] = useState(null);
   const [fileType, setFileType] = useState("img");
+  const [todoList, setTodoList] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,7 +24,26 @@ export default function DynamicForm({formSchema}) {
 
   const handleSave = () => {
     console.log("Form Data:", JSON.stringify(formData, null, 2));
+    console.log("Todo List:", JSON.stringify(todoList, null, 2));
     setIsOpen(false);
+  };
+
+  // Add a new dynamic todo
+  const handleAddTodo = () => {
+    const defaultTodo = formSchema.find((field) => field.name === "todoList")?.fields || [];
+    setTodoList([...todoList, defaultTodo.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})]);
+  };
+
+  // Update a dynamic todo item
+  const handleTodoChange = (index, key, value) => {
+    const updatedTodos = [...todoList];
+    updatedTodos[index][key] = value;
+    setTodoList(updatedTodos);
+  };
+
+  // Remove a todo item
+  const handleRemoveTodo = (index) => {
+    setTodoList(todoList.filter((_, i) => i !== index));
   };
 
   return (
@@ -50,17 +54,17 @@ export default function DynamicForm({formSchema}) {
 
       {isOpen && (
         <div className="fixed inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50 z-50">
-          <div className="w-[600px] bg-white shadow-lg  h-[90vh] border border-gray-400 p-4 rounded-xl relative overflow-y-scroll">
+          <div className="w-[600px] bg-white shadow-lg h-[90vh] border border-gray-400 p-4 rounded-xl relative overflow-y-scroll">
             {/* Close Button */}
             <button onClick={() => setIsOpen(false)} className="absolute top-3 right-3 text-gray-500 hover:text-red-500">
               ✖
             </button>
 
             {/* Render Dynamic Fields */}
-            { formSchema?.map((field) => (
-              <div key={field.name} className="mt-3">
+            {formSchema?.map((field, index) => (
+              <div key={index} className="mt-3">
                 <label className="block mb-1">{field.label}</label>
-                
+
                 {field.type === "text" && (
                   <input
                     type="text"
@@ -112,17 +116,70 @@ export default function DynamicForm({formSchema}) {
             {previewUrl && (
               <div className="mt-4 text-center">
                 <p className="text-gray-700 text-sm">Preview:</p>
-                {previewUrl &&
-                <div className="w-[100%] border rounded-lg " >
-                {fileType === "img" ? (
-                  <img src={previewUrl} alt="Preview" className="rounded-lg w-[100%] max-h-[220px] object-contain" />
-                ) : (
-                  <video src={previewUrl} controls className="rounded-lg w-[100%] max-h-[220px]" />
-                )}
-                   </div>
-                   }
+                <div className="w-[100%] border rounded-lg">
+                  {fileType === "img" ? (
+                    <img src={previewUrl} alt="Preview" className="rounded-lg w-[100%] max-h-[220px] object-contain" />
+                  ) : (
+                    <video src={previewUrl} controls className="rounded-lg w-[100%] max-h-[220px]" />
+                  )}
+                </div>
               </div>
             )}
+
+            {/* Dynamic Todo List Section */}
+            <div className="mt-6">
+              <h3 className="text-lg font-semibold">Todo List</h3>
+              {todoList.map((todo, index) => (
+                <div key={index} className="mt-3 border p-3 rounded-lg relative">
+                  <button
+                    onClick={() => handleRemoveTodo(index)}
+                    className="absolute top-1 right-1 text-red-500 hover:text-red-700 text-lg"
+                  >
+                    ✖
+                  </button>
+                  {formSchema
+                    .find((field) => field.name === "todoList")
+                    ?.fields.map((field) => (
+                      <div key={field.name} className="mt-2">
+                        <label className="block mb-1">{field.label}</label>
+                        {field.type === "text" && (
+                          <input
+                            type="text"
+                            placeholder={field.placeholder}
+                            value={todo[field.name]}
+                            onChange={(e) => handleTodoChange(index, field.name, e.target.value)}
+                            className="border rounded-lg w-full p-2"
+                          />
+                        )}
+                        {field.type === "textarea" && (
+                          <textarea
+                            placeholder={field.placeholder}
+                            value={todo[field.name]}
+                            onChange={(e) => handleTodoChange(index, field.name, e.target.value)}
+                            className="border rounded-lg w-full p-2"
+                          ></textarea>
+                        )}
+                        {field.type === "select" && (
+                          <select
+                            value={todo[field.name] || ""}
+                            onChange={(e) => handleTodoChange(index, field.name, e.target.value)}
+                            className="border rounded-lg w-full p-2"
+                          >
+                            {field.options.map((option) => (
+                              <option key={option.value} value={option.value}>
+                                {option.label}
+                              </option>
+                            ))}
+                          </select>
+                        )}
+                      </div>
+                    ))}
+                </div>
+              ))}
+              <button onClick={handleAddTodo} className="bg-green-500 text-white px-4 py-2 rounded mt-3">
+                + Add Todo
+              </button>
+            </div>
 
             {/* Save Button */}
             <div className="flex justify-center items-center my-4">

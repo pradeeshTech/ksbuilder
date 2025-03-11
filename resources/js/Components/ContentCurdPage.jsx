@@ -87,7 +87,8 @@ function tabIndex(data){
 
 function formRendering(key){
   let format ={
-    0:formSchema?.home1
+    0:formSchema?.home1,
+    1:formSchema?.formSchema
   }
 
   return format[key]
@@ -164,7 +165,7 @@ function formRendering(key){
         {tabIndex(activeIndex)}
       </div>
 
-      {<DynamicForm formSchema={formRendering(0)} />}
+      {<DynamicForm formSchema={formRendering(1)} />}
 
       {/* Modal */}
       {isOpen &&
