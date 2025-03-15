@@ -90,7 +90,7 @@ class ContentController extends Controller
         return $content;
     }
 
-    public function update(Request $request, $id){
+    public function updateContent(Request $request, $id){
         $request->validate([
             'id'=>'required|exists:contents,id',
             'section_id' => 'required|exists:sections,id',
