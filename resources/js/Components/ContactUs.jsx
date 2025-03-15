@@ -6,7 +6,7 @@ export default function ContactUs() {
         <h1 className=" text-[30px] text-[#333333] font-semibold  " > Contact Us</h1>
         <button className="" >Edit</button>
       </div>
-      <div class="breadcrumb mb-[40px]">
+      <div className="breadcrumb mb-[40px]">
         <a href="#" className=" font-semibold " >KSK BUILDER</a>
         <span className=" font-semibold ">Contact Us</span>
       </div>

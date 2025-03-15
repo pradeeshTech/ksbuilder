@@ -107,5 +107,87 @@
                 }
               ]
             }
+      ],
+      "HomePage1":[
+            {
+                  "name": "title",
+                  "label": "Title",
+                  "type": "text",
+                  "placeholder": "Enter title"
+                },
+                {
+                  "name": "content",
+                  "label": "Description",
+                  "type": "textarea",
+                  "placeholder": "Enter description"
+                }
+      ],
+      "HomePage2":[
+            {
+                  "name": "title",
+                  "label": "Title",
+                  "type": "text",
+                  "placeholder": "Enter title"
+                },
+                {
+                  "name": "fileUpload",
+                  "label": "Upload File",
+                  "type": "file",
+                  "accept": "image/*,video/*"
+                }
+      ],
+      "HomePage3":[
+            {
+                  "name": "title",
+                  "label": "Title",
+                  "type": "text",
+                  "placeholder": "Enter title"
+                },
+                {
+                  "name": "description",
+                  "label": "Description",
+                  "type": "textarea",
+                  "placeholder": "Enter description"
+                },
+                {
+                  "name": "fileUpload",
+                  "label": "Upload File",
+                  "type": "file",
+                  "accept": "image/*,video/*"
+                }
+      ],
+      "HomePage4":[
+            {
+                  "name": "title",
+                  "label": "Title",
+                  "type": "text",
+                  "placeholder": "Enter title"
+                },
+                {
+                  "name": "sub_title",
+                  "label": "Sub Title",
+                  "type": "text",
+                  "placeholder": "Sub Title"
+                },
+                {
+                  "name": "fileUpload",
+                  "label": "Upload File",
+                  "type": "file",
+                  "accept": "image/*,video/*"
+                }
+      ],
+      "HomePage5":[
+            {
+                  "name": "title",
+                  "label": "Title",
+                  "type": "text",
+                  "placeholder": "Enter title"
+                },
+                {
+                  "name": "fileUpload",
+                  "label": "Upload File",
+                  "type": "file",
+                  "accept": "image/*,video/*"
+                }
       ]
 }

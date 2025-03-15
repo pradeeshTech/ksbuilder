@@ -9,7 +9,7 @@ export default function AboutUs() {
             <h1 className=" text-[30px] text-[#333333] font-semibold  " >ABOUT US</h1>
          {/* <button className="" >Edit</button> */}
          </div>
-         <div class="breadcrumb mb-[40px]">
+         <div className="breadcrumb mb-[40px]">
             <a href="#" className=" font-semibold " >KSK BUILDER</a>
             <span  className=" font-semibold ">ABOUT US</span>
          </div>

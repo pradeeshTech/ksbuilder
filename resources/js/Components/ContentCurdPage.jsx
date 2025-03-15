@@ -185,8 +185,6 @@ function formRendering(key){
         {tabIndex(activeIndex)}
       </div>
 
-      {<DynamicForm formSchema={formRendering(0)} />}
-
       {/* Modal */}
       {isOpen &&
       <div className="fixed inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50 z-50 ">
