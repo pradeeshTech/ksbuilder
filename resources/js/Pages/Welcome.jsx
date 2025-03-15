@@ -1,6 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
 import TopBar from '@/Components/Topbar';
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 
 import MainPage from "@/Components/mainPage";
 import AboutUs from "@/Components/AboutUs";
@@ -23,11 +23,31 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
         // document.getElementById('background')?.classList.add('!hidden');
     // };
 
-    let [activeTab,setActiveTab] = useState(1); 
+    let [activeTab,setActiveTab] = useState(0); 
+
+    
+  const [formData,setFormData] = useState([]);
+
+  useEffect(() => {
+    const fetchWifiName = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/get-content");
+        const data = await response.json();
+        console.log(data,'data ::')
+        setFormData(data);
+        // setWifiName(data || "Not connected");
+      } catch (error) {
+        // setWifiName("Failed to fetch WiFi name.");
+        console.error("Error fetching WiFi SSID:", error);
+      }
+    };
+
+    fetchWifiName();
+  }, []);
     
 function tabIndex(data){
     let format = {
-      0:<MainPage  Section1={home?.firstSection1} Section2={home?.secondSection} />,
+      0:<MainPage  Section1={formData} Section2={home?.secondSection} />,
       1: <AboutUs />,
       2:<Services/>,
       3:<Projects/>,
@@ -43,7 +63,7 @@ function tabIndex(data){
     return (
         <>
             <div className=' overflow-y-auto  ' >
-                <button className='  ' >Edit</button>
+                {/* <button className='  ' >Edit</button> */}
                 <div className=' mx-[10%] h-[100%] min-h-[100vh] my-0 ' style={{ boxShadow: "0 0 20px rgba(0, 0, 0, 0.33)" }} >
                     <TopBar updateTabIndex={setActiveTab} />
                     <div className=' ' >

@@ -56,55 +56,56 @@
       ],
       "formSchema": [
             {
-                  "name": "title",
-                  "label": "Title",
+              "name": "title",
+              "label": "Title",
+              "type": "text",
+              "placeholder": "Enter title"
+            },
+            {
+              "name": "description",
+              "label": "Description",
+              "type": "textarea",
+              "placeholder": "Enter description"
+            },
+            {
+              "name": "type",
+              "label": "Select Type",
+              "type": "select",
+              "options": [
+                { "value": "img", "label": "Image" },
+                { "value": "video", "label": "Video" }
+              ]
+            },
+            {
+              "name": "fileUpload",
+              "label": "Upload File",
+              "type": "file",
+              "accept": "image/*,video/*"
+            },
+            {
+              "name": "todoList",
+              "label": "Todo List",
+              "type": "group",
+              "fields": [
+                {
+                  "name": "task",
+                  "label": "Task",
                   "type": "text",
-                  "placeholder": "Enter title"
-            },
-            {
-                  "name": "description",
-                  "label": "Description",
+                  "placeholder": "Enter task"
+                },
+                {
+                  "name": "details",
+                  "label": "Details",
                   "type": "textarea",
-                  "placeholder": "Enter description"
-            },
-            {
-                  "name": "type",
-                  "label": "Select Type",
-                  "type": "select",
-                  "options": [
-                        {
-                              "label": "Image",
-                              "value": "img"
-                        },
-                        {
-                              "label": "Video",
-                              "value": "video"
-                        }
-                  ]
-            },
-            {
-                  "name": "file",
-                  "label": "Upload File",
-                  "type": "file"
-            },
-            {
-                  "name": "todoList",
-                  "label": "Todo List",
-                  "type": "list",
-                  "fields": [
-                        {
-                              "name": "todoTitle",
-                              "label": "Todo Title",
-                              "type": "text",
-                              "placeholder": "Enter todo title"
-                        },
-                        {
-                              "name": "todoDescription",
-                              "label": "Todo Description",
-                              "type": "textarea",
-                              "placeholder": "Enter todo description"
-                        }
-                  ]
+                  "placeholder": "Enter details"
+                },
+                {
+                  "name": "attachment",
+                  "label": "Attachment",
+                  "type": "file",
+                  "accept": "image/*,video/*"
+                }
+              ]
             }
       ]
 }

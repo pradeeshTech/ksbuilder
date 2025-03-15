@@ -16,7 +16,27 @@ export default function HomePage() {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [isOpen, setIsOpen] = useState(false); // Added modal open state
 
+
+  const [formData,setFormData] = useState([]);
+
   const modalRef = useRef();
+
+  useEffect(() => {
+    const fetchWifiName = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/get-content");
+        const data = await response.json();
+        console.log(data,'data ::')
+        setFormData(data);
+        // setWifiName(data || "Not connected");
+      } catch (error) {
+        // setWifiName("Failed to fetch WiFi name.");
+        console.error("Error fetching WiFi SSID:", error);
+      }
+    };
+
+    fetchWifiName();
+  }, []);
 
   let curd_json = {
     page_type:"home",
@@ -74,7 +94,7 @@ export default function HomePage() {
 
 function tabIndex(data){
   let format = {
-    0:<MainPage  Section1={home?.firstSection1} Section2={home?.secondSection} />,
+    0:<MainPage  Section1={formData} Section2={home?.secondSection} />,
     1: <AboutUs />,
     2:<Services/>,
     3:<Projects/>,
@@ -165,7 +185,7 @@ function formRendering(key){
         {tabIndex(activeIndex)}
       </div>
 
-      {<DynamicForm formSchema={formRendering(1)} />}
+      {<DynamicForm formSchema={formRendering(0)} />}
 
       {/* Modal */}
       {isOpen &&
