@@ -21,6 +21,9 @@ Route::get('/dashboard', function () {
 
 
 Route::get('get-content',[ContentController::class,'getPageContent'])->name('get-content');
+Route::get('get-nav-bar',[ContentController::class,'getNavBar'])->name('get-nav-bar');
+Route::post('save-content',[ContentController::class,'saveContent'])->name('save-content');
+Route::post('update-content',[ContentController::class,'updateContent'])->name('update-content');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
