@@ -109,7 +109,7 @@ class ContentController extends Controller
             'image6_path' => 'nullable',
             'image6_name' => 'nullable',
         ]);
-        $content =Content::find($id);
+        $content =Content::find($request->id);
         $content->section_id = $request->section_id;
         $content->title = $request->title;
         $content->content = $request->content;
