@@ -13,6 +13,16 @@ class ContentController extends Controller
     {
         $pageId = 1;
         $content = Section::where('nav_id', $pageId)->with('sectionContent')->get();
+        foreach($content as $singleSection) {
+            foreach($singleSection->sectionContent as $singleContent) {
+                $singleContent->image1_path = $singleContent->image1_path ? asset($singleContent->image1_path): $singleContent->image1_path;
+                $singleContent->image2_path = $singleContent->image2_path ? asset($singleContent->image2_path): $singleContent->image2_path;
+                $singleContent->image3_path = $singleContent->image3_path ? asset($singleContent->image3_path): $singleContent->image3_path;
+                $singleContent->image4_path = $singleContent->image4_path ? asset($singleContent->image4_path): $singleContent->image4_path;
+                $singleContent->image5_path = $singleContent->image5_path ? asset($singleContent->image5_path): $singleContent->image5_path;
+                $singleContent->image6_path = $singleContent->image6_path ? asset($singleContent->image6_path): $singleContent->image6_path;
+            }
+        }
         return $content;
     }
 
