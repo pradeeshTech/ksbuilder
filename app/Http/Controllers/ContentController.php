@@ -120,7 +120,7 @@ class ContentController extends Controller
             'image6_name' => 'nullable',
         ]);
         $content =Content::find($request->id);
-        $content->section_id = $request->section_id;
+        // $content->section_id = $request->section_id;
         $content->title = $request->title;
         $content->content = $request->content;
         if ($request->hasFile('image1_path')) {
@@ -166,6 +166,19 @@ class ContentController extends Controller
         }
         $content->image6_name = $request->image6_name;
         $content->save();
+
+        $section = Section::find($content->section_id);
+        $content = Section::where('nav_id',  $section->nav_id)->with('sectionContent')->get();
+        foreach($content as $singleSection) {
+            foreach($singleSection->sectionContent as $singleContent) {
+                $singleContent->image1_path = $singleContent->image1_path ? asset($singleContent->image1_path): $singleContent->image1_path;
+                $singleContent->image2_path = $singleContent->image2_path ? asset($singleContent->image2_path): $singleContent->image2_path;
+                $singleContent->image3_path = $singleContent->image3_path ? asset($singleContent->image3_path): $singleContent->image3_path;
+                $singleContent->image4_path = $singleContent->image4_path ? asset($singleContent->image4_path): $singleContent->image4_path;
+                $singleContent->image5_path = $singleContent->image5_path ? asset($singleContent->image5_path): $singleContent->image5_path;
+                $singleContent->image6_path = $singleContent->image6_path ? asset($singleContent->image6_path): $singleContent->image6_path;
+            }
+        }
         return $content;
 
     }
