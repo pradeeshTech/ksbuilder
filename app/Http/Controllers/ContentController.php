@@ -168,8 +168,8 @@ class ContentController extends Controller
         $content->save();
 
         $section = Section::find($content->section_id);
-        $content = Section::where('nav_id',  $section->nav_id)->with('sectionContent')->get();
-        foreach($content as $singleSection) {
+        $contents = Section::where('nav_id',  $section->nav_id)->with('sectionContent')->get();
+        foreach($contents as $singleSection) {
             foreach($singleSection->sectionContent as $singleContent) {
                 $singleContent->image1_path = $singleContent->image1_path ? asset($singleContent->image1_path): $singleContent->image1_path;
                 $singleContent->image2_path = $singleContent->image2_path ? asset($singleContent->image2_path): $singleContent->image2_path;
@@ -179,7 +179,7 @@ class ContentController extends Controller
                 $singleContent->image6_path = $singleContent->image6_path ? asset($singleContent->image6_path): $singleContent->image6_path;
             }
         }
-        return $content;
+        return $contents;
 
     }
 }
