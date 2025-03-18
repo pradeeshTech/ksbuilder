@@ -134,6 +134,18 @@
                   "label": "Upload File",
                   "type": "file",
                   "accept": "image/*,video/*"
+                },
+                {
+                  "name": "type",
+                  "label": "Select Type",
+                  "type": "select",
+                  "options": [
+                    { "value": 1, "label": "img 1" },
+                    { "value": 2, "label": "img 2" },
+                    { "value": 3, "label": "img 3" },
+                    { "value": 4, "label": "img 4" },
+                    { "value": 5, "label": "img 5" }
+                  ]
                 }
       ],
       "HomePage3":[

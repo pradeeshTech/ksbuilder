@@ -7,32 +7,25 @@ import formSchema from "@/json/formSchema";
 export default function MainPage({ Section1, Section2, Section3, Section4, Section5 }) {
 
   const [sectionId, setSectionId] = useState();
-
-  function getCSRFToken() {
-    const cookieValue = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("XSRF-TOKEN="))
-      ?.split("=")[1];
-    return cookieValue || "";
-  }
+  const [contentDetails,setContentDetails] = useState([]);
+  const fetchContentDetails = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/get-content");
+      const data = await response.json();
+      console.log(data, 'data ::')
+      setContentDetails(data);
+      // setWifiName(data || "Not connected");
+    } catch (error) {
+      // setWifiName("Failed to fetch WiFi name.");
+      console.error("Error fetching WiFi SSID:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchWifiName = async () => {
-      try {
-        const response = await fetch("http://127.0.0.1:8000/get-content");
-        const data = await response.json();
-        console.log(data, 'data ::')
-        // setWifiName(data || "Not connected");
-      } catch (error) {
-        // setWifiName("Failed to fetch WiFi name.");
-        console.error("Error fetching WiFi SSID:", error);
-      }
-    };
-
-    fetchWifiName();
+    fetchContentDetails();
   }, []);
   const TextComponent = (data) => {
-    return <div dangerouslySetInnerHTML={{ __html: data.replace(/\n/g, "<br />") }} />;
+    return <div dangerouslySetInnerHTML={{ __html: data?.replace(/\n/g, "<br />") }} />;
   };
 
   function formRendering(key) {
@@ -48,7 +41,7 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
 
 async function CreateOrUpdate(formData, sectionId) {
   try {
-    console.log(sectionId,'sectionId')
+    console.log(formData,'sectionId')
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
     let format = {
@@ -83,7 +76,7 @@ async function CreateOrUpdate(formData, sectionId) {
     }
 
     const data = await response.json();
-    fetchWifiName();
+    fetchContentDetails();
     console.log(format, "Create Or Update ::");
   } catch (error) {
     console.error("Error creating or updating content:", error);
@@ -101,7 +94,7 @@ function getCSRFToken() {
 
 
   function SaveForm(data) {
-    console.log(data)
+    console.log(data,'AL MINA LINK PROJECT')
     CreateOrUpdate(data,sectionId);
     console.log(data, sectionId, 'final data')
   }
@@ -122,8 +115,9 @@ function getCSRFToken() {
           </div>
         </div>
         <div>
-          <h1 className=" my-4 font-bold border-b-[1px] border-gray-300 pb-2 text-[#333333]  " >{Section1[0] ? Section1[0].section_content[0].title : ''}</h1>
-          <p className=" text-start my-2 text-[14px] text-[#636363]  ">{TextComponent(Section1[0] ? Section1[0].section_content[0].content : '')}</p>
+          <h1 className=" my-4 font-bold border-b-[1px] border-gray-300 pb-2 text-[#333333]  " >
+          {contentDetails?.[0]?.section_content?.[0]?.title || ''}</h1>
+          <p className=" text-start my-2 text-[14px] text-[#636363]  ">{TextComponent(contentDetails[0] ? contentDetails?.[0].section_content?.[0]?.content : '')}</p>
           {/* {Section1?.Description.map((item, index) => ( */}
           {/* <p className=" text-start my-2 text-[14px] text-[#636363]  " key={index} >{item}</p> */}
           {/* ))} */}
