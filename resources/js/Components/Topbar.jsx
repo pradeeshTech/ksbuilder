@@ -13,11 +13,19 @@ export default function TopBar({updateTabIndex}) {
   return (
     <>
       <div className=" px-[5%]" >
-        <div className=" py-4 text-[40px] text-[#0693e3] " >
-        KSK Builder
+        <div className=" flex justify-between items-center " >
+        <div className=" pt-[40px] text-[50px] text-[#0693e3]  " >
+     KSK Builder
+     </div>
+     <div className="" >
+      <button className=" bg-[#eeeeee] px-[4px] py-[4px] " >
+        Menu <i className="pi pi-bars px-2 " ></i>
+      </button>
+     </div>
         </div>
-        <header className="navigation " style={gradientStyle} >
-          <ul className=" font-semibold flex justify-center space-x-10 p-[30px] text-[#fff]" >
+        <ul></ul>
+        <header className=" max-[935px]:hidden  max-[1350px]:text-[14px] max-[950px]:text-[13.5px]" style={gradientStyle} >
+          <ul className=" font-semibold flex justify-center space-x-10 p-[20px] max-[1060px]:px-[16px] text-[#fff]" >
             <li className=" cursor-pointer " onClick={()=>updateTab(0)} >HOME</li>
             <li className=" cursor-pointer "  onClick={()=>updateTab(1)}>ABOUT US</li>
             <li className=" cursor-pointer "  onClick={()=>updateTab(2)}>SERVICES</li>

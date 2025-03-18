@@ -1,3 +1,5 @@
+import Footer from "@/Components/Footer";
+
 export default function ContactUs() {
   return (
     <div className="  " >
@@ -22,7 +24,7 @@ export default function ContactUs() {
           referrerPolicy="no-referrer"
         ></iframe>
 
-        <div className=" my-2  grid grid-cols-4 mb-[500px] gap-4 " >
+        <div className=" my-2  grid grid-cols-4 gap-4 " >
           <div className=" " >
             <h1 className=" text-[18px] my-2 font-semibold " >KSK Builder</h1>
             <p className=" my-2 text-[16px] text-gray-500  " >
@@ -70,6 +72,7 @@ export default function ContactUs() {
         </div>
 
       </div>
+      <Footer/>
 
     </div>
   )

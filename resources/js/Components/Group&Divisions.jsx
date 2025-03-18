@@ -1,5 +1,5 @@
 import { useState } from "react"
-
+import Footer from "@/Components/Footer"
 
 export default function GroupDivisions() {
    let [isEdit,setIsEdit]  = useState();
@@ -37,6 +37,7 @@ export default function GroupDivisions() {
             </div>
 
          </div>
+         <Footer/>
       </div>
    )
 }

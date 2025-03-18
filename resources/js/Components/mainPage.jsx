@@ -1,35 +1,149 @@
 import Footer from "@/Components/Footer";
 import client_img from "../../img/Screenshot 2025-03-08 175703.png";
+import { useEffect, useState } from "react";
+import DynamicForm from "./PopUp";
+import formSchema from "@/json/formSchema";
 
 export default function MainPage({ Section1, Section2, Section3, Section4, Section5 }) {
 
-  function selectedSection() {
+  const [sectionId, setSectionId] = useState();
 
+  function getCSRFToken() {
+    const cookieValue = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("XSRF-TOKEN="))
+      ?.split("=")[1];
+    return cookieValue || "";
   }
+
+  useEffect(() => {
+    const fetchWifiName = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/get-content");
+        const data = await response.json();
+        console.log(data, 'data ::')
+        // setWifiName(data || "Not connected");
+      } catch (error) {
+        // setWifiName("Failed to fetch WiFi name.");
+        console.error("Error fetching WiFi SSID:", error);
+      }
+    };
+
+    fetchWifiName();
+  }, []);
+  const TextComponent = (data) => {
+    return <div dangerouslySetInnerHTML={{ __html: data.replace(/\n/g, "<br />") }} />;
+  };
+
+  function formRendering(key) {
+    let format = {
+      0: formSchema?.HomePage1,
+      1: formSchema?.HomePage2,
+      2: formSchema?.HomePage3,
+      3: formSchema?.HomePage4,
+    }
+
+    return format[key]
+  }
+
+async function CreateOrUpdate(formData, sectionId) {
+  try {
+    console.log(sectionId,'sectionId')
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+    let format = {
+      id: 1,
+      section_id: sectionId, // Ensure this is defined
+      ...formData,
+      image1_path: "",
+      image1_name: "",
+      image2_path: "",
+      image2_name: "",
+      image3_path: "",
+      image3_name: "",
+      image4_path: "",
+      image4_name: "",
+      image5_path: "",
+      image5_name: "",
+      image6_path: "",
+      image6_name: "",
+    };
+
+    const response = await fetch("http://127.0.0.1:8000/update-content", {
+      method: "POST", // Ensure it's POST
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": csrfToken  // Attach CSRF token in headers    
+          },
+      body: JSON.stringify(format),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    fetchWifiName();
+    console.log(format, "Create Or Update ::");
+  } catch (error) {
+    console.error("Error creating or updating content:", error);
+  }
+}
+
+// Function to get CSRF token from cookies
+function getCSRFToken() {
+  const cookieValue = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("XSRF-TOKEN="))
+    ?.split("=")[1];
+  return cookieValue || "";
+}
+
+
+  function SaveForm(data) {
+    console.log(data)
+    CreateOrUpdate(data,sectionId);
+    console.log(data, sectionId, 'final data')
+  }
+
   return (
     <div>
       <div className=" px-[5%]" >
+        {/*  */}
+
         {/* 1 section */}
-        <h1 className=" text-[24px] font-semibold my-2 " >1 Section</h1>
+
+        <div className=" flex justify-start items-center " onClick={() => { setSectionId(1) }}>
+          <h1 className=" text-[24px] font-semibold my-2 "  >1 Section</h1>
+          {sectionId}
+          {<DynamicForm formSchema={formRendering(0)} onSubmit={SaveForm} />}
+          <div>
+
+          </div>
+        </div>
         <div>
-          <h1 className=" my-4 font-bold border-b-[1px] border-gray-300 pb-2 text-[#333333]  " >{Section1?.title}</h1>
-          {Section1?.Description.map((item, index) => (
-            <p className=" text-start my-2 text-[14px] text-[#636363]  " key={index} >{item}</p>
-          ))}
+          <h1 className=" my-4 font-bold border-b-[1px] border-gray-300 pb-2 text-[#333333]  " >{Section1[0] ? Section1[0].section_content[0].title : ''}</h1>
+          <p className=" text-start my-2 text-[14px] text-[#636363]  ">{TextComponent(Section1[0] ? Section1[0].section_content[0].content : '')}</p>
+          {/* {Section1?.Description.map((item, index) => ( */}
+          {/* <p className=" text-start my-2 text-[14px] text-[#636363]  " key={index} >{item}</p> */}
+          {/* ))} */}
         </div>
 
         {/* 2 section */}
 
         <div className="mt-[80px]" >
-          <h1 className="text-[24px] font-semibold ">2 Section</h1>
+          <div className=" flex justify-start items-center" onClick={() => { setSectionId(2) }}  >
+            <h1 className="text-[24px] font-semibold ">2 Section</h1>
+            {<DynamicForm formSchema={formRendering(1)}  onSubmit={SaveForm} />}
+          </div>
 
           <div className=" " >
             {Section2.map((item, index) => (
               <div key={index} >
                 <h1 className=" my-4 font-bold border-b-[1px] border-gray-300 pb-2 text-[#333333] " >{item?.title}</h1>
                 <div className=" shadow-lg rounded-lg h-[400px] border border-gray-500 text-gray-400 " >
-                <video class=" object-cover w-[100%] h-[100%] " id="video-3181-1" preload="metadata" controls="controls"><source type="video/mp4" src="https://web.think.ind.in/wp-content/uploads/2022/01/AL-MINA-LINK-PROJECT230a.mp4?_=1" /><source type="video/mp4" src="https://web.think.ind.in/wp-content/uploads/2022/01/AL-MINA-LINK-PROJECT230a.mp4?_=1" /><a href="wp-content/uploads/
-2022/01/AL-MINA-LINK-PROJECT.mp4">https://nbhh.ae/wp-content/uploads/2022/01/AL-MINA-LINK-PROJECT.mp4</a></video> 
+                  <video class=" object-cover w-[100%] h-[100%] " id="video-3181-1" preload="metadata" controls="controls"><source type="video/mp4" src="https://web.think.ind.in/wp-content/uploads/2022/01/AL-MINA-LINK-PROJECT230a.mp4?_=1" /><source type="video/mp4" src="https://web.think.ind.in/wp-content/uploads/2022/01/AL-MINA-LINK-PROJECT230a.mp4?_=1" /><a href="wp-content/uploads/
+2022/01/AL-MINA-LINK-PROJECT.mp4">https://nbhh.ae/wp-content/uploads/2022/01/AL-MINA-LINK-PROJECT.mp4</a></video>
 
                 </div>
               </div>
@@ -40,7 +154,10 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
         {/* 3 section */}
 
         <div className="mt-[80px]" >
-          <h1 className=" my-2 font-semibold text-[24px]  " >3 Section</h1>
+          <div className=" flex justify-start items-center" >
+            <h1 className="text-[24px] font-semibold ">3 Section</h1>
+            {<DynamicForm formSchema={formRendering(2)} />}
+          </div>
           <div className=" grid grid-cols-2 gap-5 " >
             <div className=" border-[1px] border-gray-200 shadow-lg " >
             </div>
@@ -57,8 +174,10 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
         {/* 4 section */}
 
         <div className=" mt-[80px] " >
-          <h1 className=" my-2 font-semibold text-[24px]  " >FEATURED PROJECTS</h1>
-
+          <div className=" flex justify-start items-center" >
+            <h1 className="text-[24px] font-semibold ">FEATURED PROJECTS</h1>
+            {<DynamicForm formSchema={formRendering(3)} />}
+          </div>
           <div className=" grid grid-cols-3 w-[100%] h-[240px] gap-4" >
             <div className=" flex flex-col justify-center items-center " >
               <div className="bg-gray-50  border shadow-md rounded-md h-[100%] w-[100%] " ></div>
@@ -78,7 +197,11 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
         {/* 5 section */}
 
         <div className="my-[100px]" >
-          <h1>5 section </h1>
+          <h1> </h1>
+          <div className=" flex justify-start items-center" >
+            <h1 className="text-[24px] font-semibold ">5 section</h1>
+            {<DynamicForm formSchema={formRendering(4)} />}
+          </div>
           <h1 className=" my-2  text-[24px]  " >CLIENTS</h1>
 
           <div className=" grid grid-cols-5 gap-5 my-4 border-gray-300 border-y-[1px] py-10 " >
@@ -98,12 +221,16 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
               <img src={client_img} alt="" className="w-[100%] h-[100%]  " />
             </div>
           </div>
-        </div>        
+        </div>
 
       </div>
 
       <div className=" bg-[#000] p-4 text-[#fff] " >
-        <h1 className="" > 6 Section</h1>
+
+        <div className=" flex justify-start items-center" >
+          <h1 className="text-[24px] font-semibold "> 6  section</h1>
+          {<DynamicForm formSchema={formRendering(5)} />}
+        </div>
         <h1 className=" my-2 " >Insta</h1>
         <div className=" grid grid-cols-3  h-[240px] gap-4 " >
           <div className=" bg-[#fff] rounded-lg  " >
@@ -114,7 +241,7 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
 
     </div>
   )

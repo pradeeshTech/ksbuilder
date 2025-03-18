@@ -1,5 +1,5 @@
 import { useState } from "react"
-
+import Footer from "@/Components/Footer"
 
 export default function Projects() {
    let [isEdit,setIsEdit]  = useState();
@@ -37,6 +37,7 @@ export default function Projects() {
             </div>
 
          </div>
+         <Footer/>
       </div>
    )
 }

@@ -1,4 +1,5 @@
 // import { useState } from "react"
+import Footer from "@/Components/Footer"
 
 
 export default function AboutUs() {
@@ -37,6 +38,7 @@ export default function AboutUs() {
             </div>
 
          </div>
+         <Footer/>
       </div>
    )
 }

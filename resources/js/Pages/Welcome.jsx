@@ -64,9 +64,9 @@ function tabIndex(data){
         <>
             <div className=' overflow-y-auto  ' >
                 {/* <button className='  ' >Edit</button> */}
-                <div className=' mx-[10%] h-[100%] min-h-[100vh] my-0 ' style={{ boxShadow: "0 0 20px rgba(0, 0, 0, 0.33)" }} >
+                <div className=' mx-[10%] h-[100%] min-h-[100vh] my-0 max-[1300px]:mx-[5%] max-[1072px]:mx-[0%]  ' style={{ boxShadow: "0 0 20px rgba(0, 0, 0, 0.33)" }} >
                     <TopBar updateTabIndex={setActiveTab} />
-                    <div className=' ' >
+                    <div className='' >
                         {tabIndex(activeTab)}
                     </div>
                 </div>
