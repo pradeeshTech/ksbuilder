@@ -101,28 +101,33 @@ class ContentController extends Controller
     }
 
     public function updateContent(Request $request){
-        $request->validate([
-            'id'=>'required|exists:contents,id',
-            'section_id' => 'required|exists:sections,id',
-            'title' => 'nullable',
-            'content' => 'nullable',
-            'image1_path' => 'nullable',
-            'image1_name' => 'nullable',
-            'image2_path' => 'nullable',
-            'image2_name' => 'nullable',
-            'image3_path' => 'nullable',
-            'image3_name' => 'nullable',
-            'image4_path' => 'nullable',
-            'image4_name' => 'nullable',
-            'image5_path' => 'nullable',
-            'image5_name' => 'nullable',
-            'image6_path' => 'nullable',
-            'image6_name' => 'nullable',
-        ]);
+       
+        // dd($request->all());
+
+        // $validatedData = $request->validate([
+        //     'id' => 'required|exists:contents,id',
+        //     'section_id' => 'required|exists:sections,id',
+        //     'title' => 'nullable|string',
+        //     'content' => 'nullable|string',
+        //     'image1_path' => 'nullable|image',
+        //     'image1_name' => 'nullable|string',
+        //     'image2_path' => 'nullable|image',
+        //     'image2_name' => 'nullable|string',
+        //     'image3_path' => 'nullable|image',
+        //     'image3_name' => 'nullable|string',
+        //     'image4_path' => 'nullable|image',
+        //     'image4_name' => 'nullable|string',
+        //     'image5_path' => 'nullable|image',
+        //     'image5_name' => 'nullable|string',
+        //     'image6_path' => 'nullable|image', // Ensure it's validated as an image
+        //     'image6_name' => 'nullable|string',
+        // ]);
+            //  dd($request->all());
         $content =Content::find($request->id);
         // $content->section_id = $request->section_id;
         $content->title = $request->title;
         $content->content = $request->content;
+        // dd($request->hasFile('image1_path'));
         if ($request->hasFile('image1_path')) {
             $file = $request->file('image1_path');
             $filename = time() . '_' . $file->getClientOriginalName(); // Unique filename
