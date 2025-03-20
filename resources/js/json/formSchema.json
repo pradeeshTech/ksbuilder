@@ -136,7 +136,7 @@
                   "accept": "image/*,video/*"
                 },
                 {
-                  "name": "type",
+                  "name": "imageType",
                   "label": "Select Type",
                   "type": "select",
                   "options": [

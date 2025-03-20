@@ -10,6 +10,7 @@ export default function DynamicForm({ formSchema,onSubmit }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    // console.log( name, value )
 
     if (name === "type") {
       setFileType(value);
@@ -27,8 +28,8 @@ export default function DynamicForm({ formSchema,onSubmit }) {
   };
 const handleSave = () => {
   onSubmit(formData);
-  console.log("Form Data:", formData);
-  console.log("File Object:", formData.file);
+  // console.log("Form Data:", formData);
+  // console.log("File Object:", formData.file);
   setIsOpen(false)
   // alert(`File Name: ${formData.file.name}`);
 }

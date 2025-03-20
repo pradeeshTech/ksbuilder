@@ -8,6 +8,8 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
 
   const [sectionId, setSectionId] = useState();
   const [contentDetails,setContentDetails] = useState([]);
+  const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
   const fetchContentDetails = async () => {
     try {
       const response = await fetch("http://127.0.0.1:8000/get-content");
@@ -42,10 +44,9 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
 async function CreateOrUpdate(formData, sectionId) {
   try {
     console.log(formData,'sectionId')
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
     let format = {
-      id: 1,
+      id: sectionId,
       section_id: sectionId, // Ensure this is defined
       ...formData,
       image1_path: "",
@@ -70,14 +71,14 @@ async function CreateOrUpdate(formData, sectionId) {
           },
       body: JSON.stringify(format),
     });
-
+// 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-
+// 
     const data = await response.json();
     fetchContentDetails();
-    console.log(format, "Create Or Update ::");
+    // console.log(format, "Create Or Update ::");
   } catch (error) {
     console.error("Error creating or updating content:", error);
   }
@@ -94,11 +95,93 @@ function getCSRFToken() {
 
 
   function SaveForm(data) {
-    console.log(data,'AL MINA LINK PROJECT')
-    CreateOrUpdate(data,sectionId);
-    console.log(data, sectionId, 'final data')
+    // console.log(data,'AL MINA LINK PROJECT')
+
+    const actions = {
+      1:CreateOrUpdate,
+      2:SaveSection2,
+    }
+
+    actions[sectionId]?.(data,sectionId);
+  
+    // console.log(data, sectionId, 'final data')
   }
 
+
+  async function SaveSection2(data, sectionId) {
+    console.log(data,'data :::')
+    let format = {
+      1: { image1_path: "", image1_name: "" },
+      2: { image2_path: "", image2_name: "" },
+      3: { image3_path: "", image3_name: "" },
+      4: { image4_path: "", image4_name: "" },
+      5: { image5_path: "", image5_name: "" },
+      6: { image6_path: "", image6_name: "" },
+      7: { image7_path: "", image7_name: "" },
+      8: { image8_path: "", image8_name: "" },
+      9: { image9_path: "", image9_name: "" },
+      10: { image10_path: "", image10_name: "" },
+    };
+  
+    // Ensure data.imageType exists before updating format
+    if (data?.imageType) {
+      const keyPath = `image${data.imageType}_path`; // Dynamically create the key
+      const keyPathName = `image${data.imageType}_name`; // Dynamically create the key
+  
+      format[data.imageType][keyPath] = data?.file || ""; 
+      format[data.imageType][keyPathName] = data?.title || ""; // Store title
+    }
+
+    console.log(format);
+
+    // Select the correct section format
+    // let format1 = format[+data.imageType] || {};
+    console.log(data.imageType)
+
+     // Build a FormData instance
+  const formData = new FormData();
+
+  // Always append `id`
+  formData.append("id", sectionId);
+
+  // Append each field individually
+  formData.append("image1_path", format[data.imageType].image1_path || "");
+  formData.append("image1_name", format[data.imageType].image1_name || "");
+  formData.append("image2_path", format[data.imageType].image2_path || "");
+  formData.append("image2_name", format[data.imageType].image2_name || "");
+  formData.append("image3_path", format[data.imageType].image3_path || "");
+  formData.append("image3_name", format[data.imageType].image3_name || "");
+  formData.append("image4_path", format[data.imageType].image4_path || "");
+  formData.append("image4_name", format[data.imageType].image4_name || "");
+  formData.append("image5_path", format[data.imageType].image5_path || "");
+  formData.append("image5_name", format[data.imageType].image5_name || "");
+  formData.append("image6_path", format[data.imageType].image6_path || "");
+  formData.append("image6_name", format[data.imageType].image6_name || "");
+
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/update-content", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": csrfToken, // Ensure csrfToken is defined
+        },
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const res = await response.json();
+      fetchContentDetails();
+      // console.log(res, "payload ::");
+    } catch (error) {
+      console.error("Error in SaveSection2:", error);
+    }
+  }
+
+  
   return (
     <div>
       <div className=" px-[5%]" >
@@ -131,7 +214,8 @@ function getCSRFToken() {
             {<DynamicForm formSchema={formRendering(1)}  onSubmit={SaveForm} />}
           </div>
 
-          <div className=" " >
+          <div className="" >
+          {JSON.stringify(contentDetails[1])}
             {Section2.map((item, index) => (
               <div key={index} >
                 <h1 className=" my-4 font-bold border-b-[1px] border-gray-300 pb-2 text-[#333333] " >{item?.title}</h1>
