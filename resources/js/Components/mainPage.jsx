@@ -163,7 +163,6 @@ function getCSRFToken() {
       const response = await fetch("http://127.0.0.1:8000/update-content", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           "X-CSRF-TOKEN": csrfToken, // Ensure csrfToken is defined
         },
         body: formData,
