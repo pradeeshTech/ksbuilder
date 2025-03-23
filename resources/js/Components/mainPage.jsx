@@ -7,7 +7,7 @@ import formSchema from "@/json/formSchema";
 export default function MainPage({ Section1, Section2, Section3, Section4, Section5 }) {
 
   const [sectionId, setSectionId] = useState();
-  const [contentDetails,setContentDetails] = useState([]);
+  const [contentDetails, setContentDetails] = useState([]);
   const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
   const fetchContentDetails = async () => {
@@ -41,75 +41,71 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
     return format[key]
   }
 
-async function CreateOrUpdate(formData, sectionId) {
-  try {
-    console.log(formData,'sectionId')
+  async function CreateOrUpdate(formData, sectionId) {
+    try {
+      console.log(formData, 'sectionId')
 
-    let format = {
-      id: sectionId,
-      section_id: sectionId, // Ensure this is defined
-      ...formData,
-      image1_path: "",
-      image1_name: "",
-      image2_path: "",
-      image2_name: "",
-      image3_path: "",
-      image3_name: "",
-      image4_path: "",
-      image4_name: "",
-      image5_path: "",
-      image5_name: "",
-      image6_path: "",
-      image6_name: "",
-    };
+      let format = {
+        id: sectionId,
+        section_id: sectionId, // Ensure this is defined
+        ...formData,
+        image1_path: "",
+        image1_name: "",
+        image2_path: "",
+        image2_name: "",
+        image3_path: "",
+        image3_name: "",
+        image4_path: "",
+        image4_name: "",
+        image5_path: "",
+        image5_name: "",
+        image6_path: "",
+        image6_name: "",
+      };
 
-    const response = await fetch("http://127.0.0.1:8000/update-content", {
-      method: "POST", // Ensure it's POST
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-TOKEN": csrfToken  // Attach CSRF token in headers    
-          },
-      body: JSON.stringify(format),
-    });
-// 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      const response = await fetch("http://127.0.0.1:8000/update-content", {
+        method: "POST", // Ensure it's POST
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": csrfToken  // Attach CSRF token in headers    
+        },
+        body: JSON.stringify(format),
+      });
+      // 
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      // 
+      const data = await response.json();
+      fetchContentDetails();
+      // console.log(format, "Create Or Update ::");
+    } catch (error) {
+      console.error("Error creating or updating content:", error);
     }
-// 
-    const data = await response.json();
-    fetchContentDetails();
-    // console.log(format, "Create Or Update ::");
-  } catch (error) {
-    console.error("Error creating or updating content:", error);
   }
-}
 
-// Function to get CSRF token from cookies
-function getCSRFToken() {
-  const cookieValue = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("XSRF-TOKEN="))
-    ?.split("=")[1];
-  return cookieValue || "";
-}
-
+  // Function to get CSRF token from cookies
+  function getCSRFToken() {
+    const cookieValue = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("XSRF-TOKEN="))
+      ?.split("=")[1];
+    return cookieValue || "";
+  }
 
   function SaveForm(data) {
-    // console.log(data,'AL MINA LINK PROJECT')
-
+    console.log(data, 'data :::');
     const actions = {
-      1:CreateOrUpdate,
-      2:SaveSection2,
+      1: CreateOrUpdate,
+      2: SaveSection2,
+      3: saveSection3
     }
 
-    actions[sectionId]?.(data,sectionId);
-  
-    // console.log(data, sectionId, 'final data')
+    actions[sectionId]?.(data, sectionId);
   }
 
-
   async function SaveSection2(data, sectionId) {
-    console.log(data,'data :::')
+    console.log(data, 'data :::')
     let format = {
       1: { image1_path: "", image1_name: "" },
       2: { image2_path: "", image2_name: "" },
@@ -122,41 +118,41 @@ function getCSRFToken() {
       9: { image9_path: "", image9_name: "" },
       10: { image10_path: "", image10_name: "" },
     };
-  
+
     // Ensure data.imageType exists before updating format
-    if (data?.imageType) {
-      const keyPath = `image${data.imageType}_path`; // Dynamically create the key
-      const keyPathName = `image${data.imageType}_name`; // Dynamically create the key
-  
-      format[data.imageType][keyPath] = data?.file || ""; 
-      format[data.imageType][keyPathName] = data?.title || ""; // Store title
+    if (data?.imageType || 1) {
+      const keyPath = `image${data?.imageType || 1}_path`; // Dynamically create the key
+      const keyPathName = `image${data?.imageType || 1}_name`; // Dynamically create the key
+
+      format[data?.imageType || 1][keyPath] = data?.file || "";
+      format[data?.imageType || 1][keyPathName] = data?.title || ""; // Store title
     }
 
     console.log(format);
 
     // Select the correct section format
     // let format1 = format[+data.imageType] || {};
-    console.log(data.imageType)
+    // console.log(data.imageType)
 
-     // Build a FormData instance
-  const formData = new FormData();
+    // Build a FormData instance
+    const formData = new FormData();
 
-  // Always append `id`
-  formData.append("id", sectionId);
+    // Always append `id`
+    formData.append("id", sectionId);
 
-  // Append each field individually
-  formData.append("image1_path", format[data.imageType].image1_path || "");
-  formData.append("image1_name", format[data.imageType].image1_name || "");
-  formData.append("image2_path", format[data.imageType].image2_path || "");
-  formData.append("image2_name", format[data.imageType].image2_name || "");
-  formData.append("image3_path", format[data.imageType].image3_path || "");
-  formData.append("image3_name", format[data.imageType].image3_name || "");
-  formData.append("image4_path", format[data.imageType].image4_path || "");
-  formData.append("image4_name", format[data.imageType].image4_name || "");
-  formData.append("image5_path", format[data.imageType].image5_path || "");
-  formData.append("image5_name", format[data.imageType].image5_name || "");
-  formData.append("image6_path", format[data.imageType].image6_path || "");
-  formData.append("image6_name", format[data.imageType].image6_name || "");
+    // Append each field individually
+    formData.append("image1_path", format[data?.imageType || 1].image1_path || "");
+    formData.append("image1_name", format[data?.imageType || 1].image1_name || "");
+    formData.append("image2_path", format[data?.imageType || 1].image2_path || "");
+    formData.append("image2_name", format[data?.imageType || 1].image2_name || "");
+    formData.append("image3_path", format[data?.imageType || 1].image3_path || "");
+    formData.append("image3_name", format[data?.imageType || 1].image3_name || "");
+    formData.append("image4_path", format[data?.imageType || 1].image4_path || "");
+    formData.append("image4_name", format[data?.imageType || 1].image4_name || "");
+    formData.append("image5_path", format[data?.imageType || 1].image5_path || "");
+    formData.append("image5_name", format[data?.imageType || 1].image5_name || "");
+    formData.append("image6_path", format[data?.imageType || 1].image6_path || "");
+    formData.append("image6_name", format[data?.imageType || 1].image6_name || "");
 
 
     try {
@@ -167,11 +163,11 @@ function getCSRFToken() {
         },
         body: formData,
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
+
       const res = await response.json();
       fetchContentDetails();
       // console.log(res, "payload ::");
@@ -180,7 +176,44 @@ function getCSRFToken() {
     }
   }
 
-  
+  async function saveSection3(data, sectionId) {
+
+    console.log(sectionId, 'data :: ');
+    const formData = new FormData();
+
+    formData.append("id", 1);
+    formData.append("section_id", sectionId);
+    // Append each field individually.
+    formData.append("title", data?.title);
+
+    formData.append("content", data?.content);
+
+    formData.append("image1_path", data?.image1_path);
+
+    // console.log(formData,'formData :: ');
+    try {
+      const response = await fetch("http://127.0.0.1:8000/update-content", {
+        method: "POST",
+        headers: {
+          "X-CSRF-TOKEN": csrfToken, // Ensure csrfToken is defined
+        },
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const res = await response.json();
+      
+      // console.log(res, "payload ::");
+    } catch (error) {
+      console.error("Error in SaveSection2:", error);
+    }
+
+    fetchContentDetails();
+
+  }
+
+
   return (
     <div>
       <div className=" px-[5%]" >
@@ -198,7 +231,7 @@ function getCSRFToken() {
         </div>
         <div>
           <h1 className=" my-4 font-bold border-b-[1px] border-gray-300 pb-2 text-[#333333]  " >
-          {contentDetails?.[0]?.section_content?.[0]?.title || ''}</h1>
+            {contentDetails?.[0]?.section_content?.[0]?.title || ''}</h1>
           <p className=" text-start my-2 text-[14px] text-[#636363]  ">{TextComponent(contentDetails[0] ? contentDetails?.[0].section_content?.[0]?.content : '')}</p>
           {/* {Section1?.Description.map((item, index) => ( */}
           {/* <p className=" text-start my-2 text-[14px] text-[#636363]  " key={index} >{item}</p> */}
@@ -210,39 +243,72 @@ function getCSRFToken() {
         <div className="mt-[80px]" >
           <div className=" flex justify-start items-center" onClick={() => { setSectionId(2) }}  >
             <h1 className="text-[24px] font-semibold ">2 Section</h1>
-            {<DynamicForm formSchema={formRendering(1)}  onSubmit={SaveForm} />}
+            {<DynamicForm formSchema={formRendering(1)} onSubmit={SaveForm} />}
           </div>
 
           <div className="" >
-          {JSON.stringify(contentDetails[1])}
-            {Section2.map((item, index) => (
-              <div key={index} >
-                <h1 className=" my-4 font-bold border-b-[1px] border-gray-300 pb-2 text-[#333333] " >{item?.title}</h1>
-                <div className=" shadow-lg rounded-lg h-[400px] border border-gray-500 text-gray-400 " >
-                  <video class=" object-cover w-[100%] h-[100%] " id="video-3181-1" preload="metadata" controls="controls"><source type="video/mp4" src="https://web.think.ind.in/wp-content/uploads/2022/01/AL-MINA-LINK-PROJECT230a.mp4?_=1" /><source type="video/mp4" src="https://web.think.ind.in/wp-content/uploads/2022/01/AL-MINA-LINK-PROJECT230a.mp4?_=1" /><a href="wp-content/uploads/
-2022/01/AL-MINA-LINK-PROJECT.mp4">https://nbhh.ae/wp-content/uploads/2022/01/AL-MINA-LINK-PROJECT.mp4</a></video>
-
+            {contentDetails?.[1]?.section_content?.[0]?.image1_name &&
+              <div className="" >
+                <h1 className="  my-4 font-bold border-b-[1px] border-gray-300 pb-2 text-[#333333]  " >{contentDetails[1].section_content?.[0].image1_name || ''}</h1>
+                <div className="shadow-lg rounded-lg h-[400px] text-gray-400 " >
+                  <img src={contentDetails[1].section_content[0].image1_path} className="object-cover w-[100%] h-[100%]" alt="" />
                 </div>
               </div>
-            ))}
+            }
+
+            {contentDetails?.[1]?.section_content?.[0]?.image2_name &&
+              <div className="" >
+                <h1 className="  my-4 font-bold border-b-[1px] border-gray-300 pb-2 text-[#333333]  " >{contentDetails[1].section_content[0].image2_name || ''}</h1>
+                <div className="shadow-lg rounded-lg h-[400px] text-gray-400 " >
+                  <img src={contentDetails[1].section_content?.[0].image2_path} className="object-cover w-[100%] h-[100%]" alt="" />
+                </div>
+              </div>
+            }
+
+            {contentDetails?.[1]?.section_content?.[0]?.image3_name &&
+              <div className="" >
+                <h1 className="  my-4 font-bold border-b-[1px] border-gray-300 pb-2 text-[#333333]  " >{contentDetails[1].section_content[0].image3_name || ''}</h1>
+                <div className="shadow-lg rounded-lg h-[400px] text-gray-400 " >
+                  <img src={contentDetails[1].section_content[0].image3_path} className="object-cover w-[100%] h-[100%]" alt="" />
+                </div>
+              </div>}
+
+            {contentDetails?.[1]?.section_content?.[0]?.image4_name &&
+              <div className="" >
+                <h1 className="  my-4 font-bold border-b-[1px] border-gray-300 pb-2 text-[#333333]  " >{contentDetails[1].section_content[0].image4_name || ''}</h1>
+                <div className="shadow-lg rounded-lg h-[400px] text-gray-400 " >
+                  <img src={contentDetails[1].section_content[0].image4_path} className="object-cover w-[100%] h-[100%]" alt="" />
+                </div>
+              </div>}
+
+            {contentDetails?.[1]?.section_content?.[0]?.image5_name &&
+              <div className="" >
+                <h1 className="  my-4 font-bold border-b-[1px] border-gray-300 pb-2 text-[#333333]  " >{contentDetails[1].section_content[0].image5_name || ''}</h1>
+                <div className="shadow-lg rounded-lg h-[400px] text-gray-400 " >
+                  <img src={contentDetails[1].section_content[0].image5_path} className="object-cover w-[100%] h-[100%]" alt="" />
+                </div>
+              </div>}
+
+
+            {/*  */}
           </div>
         </div>
 
         {/* 3 section */}
 
         <div className="mt-[80px]" >
-          <div className=" flex justify-start items-center" >
+          <div className=" flex justify-start items-center"  onClick={() => { setSectionId(3) }} >
             <h1 className="text-[24px] font-semibold ">3 Section</h1>
-            {<DynamicForm formSchema={formRendering(2)} />}
+            {<DynamicForm formSchema={formRendering(2)} onSubmit={SaveForm} />}
           </div>
           <div className=" grid grid-cols-2 gap-5 " >
             <div className=" border-[1px] border-gray-200 shadow-lg " >
+              <img src={contentDetails?.[2]?.section_content?.[0]?.image1_name} alt="" />
             </div>
             <div className=" flex flex-col items-center " >
-              <h1 className=" my-2 font-semibold text-start py-2 border-b border-gray-400 w-[100%] " >TONY SALIBA | MANAGING DIRECTOR</h1>
+              <h1 className=" my-2 font-semibold text-start py-2 border-b border-gray-400 w-[100%] " >{contentDetails?.[2]?.title}</h1>
               <div className=" my-2 flex justify-start flex-col " >
-                <p className="my-2" >Our construction operations continue to secure new work throughout the region by aiming those projects on which we have a competitive advantage either through a specific technical proficiency, a well-built geographical presence and a successful track record with the client.</p>
-                <p className="my-2">Our construction operations continue to secure new work throughout the region by projects on which we have a competitive advantage either through a specific technic well-built geographical presence and a successful track record with the client.</p>
+                <p className="my-2" >{contentDetails[2]?.content}</p>
               </div>
             </div>
           </div>

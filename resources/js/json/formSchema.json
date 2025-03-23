@@ -156,7 +156,7 @@
                   "placeholder": "Enter title"
                 },
                 {
-                  "name": "description",
+                  "name": "content",
                   "label": "Description",
                   "type": "textarea",
                   "placeholder": "Enter description"
