@@ -127,7 +127,7 @@ class ContentController extends Controller
         $content = Content::find($request->id);
         if (!$content) {
             $content = new Content;
-            // $content->section_id = $request->section_id;
+            $content->section_id = $request->section_id;
             $title  = $request->title ? $request->title : null;
             $content = $request->content ? $request->content : null;
             $content->title = $title;
