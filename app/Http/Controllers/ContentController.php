@@ -125,15 +125,17 @@ class ContentController extends Controller
             //  dd($request->all());
         $content =Content::find($request->id);
         // $content->section_id = $request->section_id;
-        $content->title = $request->title;
-        $content->content = $request->content;
+        $title  = $request->title ? $request->title : $content->title;
+        $content = $request->content ? $request->content : $content->content;
+        $content->title = $title;
+        $content->content = $content;
         // dd($request->hasFile('image1_path'));
         if ($request->hasFile('image1_path')) {
             $file = $request->file('image1_path');
             $filename = time() . '_' . $file->getClientOriginalName(); // Unique filename
             $path = $file->storeAs('uploads/images', $filename, 'public'); // Store in storage/app/public/uploads/images
             $content->image1_path = 'storage/' . $path; // Store relative path in DB
-            $content->image1_name = $request->image1_name;
+            $content->image1_name = $request->image1_name ? $request->image1_name : $content->image1_name;
         }
         
         if ($request->hasFile('image2_path')) {
@@ -141,7 +143,7 @@ class ContentController extends Controller
             $filename = time() . '_' . $file->getClientOriginalName(); // Unique filename
             $path = $file->storeAs('uploads/images', $filename, 'public'); // Store in storage/app/public/uploads/images
             $content->image2_path = 'storage/' . $path; // Store relative path in DB
-            $content->image2_name = $request->image2_name;
+            $content->image2_name = $request->image2_name ? $request->image2_name : $content->image2_name;
         }
 
         if ($request->hasFile('image3_path')) {
@@ -149,7 +151,7 @@ class ContentController extends Controller
             $filename = time() . '_' . $file->getClientOriginalName(); // Unique filename
             $path = $file->storeAs('uploads/images', $filename, 'public'); // Store in storage/app/public/uploads/images
             $content->image3_path = 'storage/' . $path; // Store relative path in DB
-            $content->image3_name = $request->image3_name;
+            $content->image3_name = $request->image3_name ? $request->image3_name : $content->image3_name;
         }
         
         if ($request->hasFile('image4_path')) {
@@ -157,7 +159,7 @@ class ContentController extends Controller
             $filename = time() . '_' . $file->getClientOriginalName(); // Unique filename
             $path = $file->storeAs('uploads/images', $filename, 'public'); // Store in storage/app/public/uploads/images
             $content->image4_path = 'storage/' . $path; // Store relative path in DB
-            $content->image4_name = $request->image4_name;
+            $content->image4_name = $request->image4_name ? $request->image4_name : $content->image4_name;
         }
         
         if ($request->hasFile('image5_path')) {
@@ -165,7 +167,7 @@ class ContentController extends Controller
             $filename = time() . '_' . $file->getClientOriginalName(); // Unique filename
             $path = $file->storeAs('uploads/images', $filename, 'public'); // Store in storage/app/public/uploads/images
             $content->image5_path = 'storage/' . $path; // Store relative path in DB
-            $content->image5_name = $request->image5_name;
+            $content->image5_name = $request->image5_name ? $request->image5_name : $content->image5_name;
         }
         
         if ($request->hasFile('image6_path')) {
@@ -173,7 +175,7 @@ class ContentController extends Controller
             $filename = time() . '_' . $file->getClientOriginalName(); // Unique filename
             $path = $file->storeAs('uploads/images', $filename, 'public'); // Store in storage/app/public/uploads/images
             $content->image6_path = 'storage/' . $path; // Store relative path in DB
-            $content->image6_name = $request->image6_name;
+            $content->image6_name = $request->image6_name ? $request->image6_name : $content->image6_name;
         }
        
         $content->save();
