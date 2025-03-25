@@ -182,6 +182,19 @@
                   "placeholder": "Sub Title"
                 },
                 {
+                  "name": "imageType",
+                  "label": "Select Type",
+                  "type": "select",
+                  "options": [
+                    { "value": 1, "label": "img 1" },
+                    { "value": 2, "label": "img 2" },
+                    { "value": 3, "label": "img 3" },
+                    { "value": 4, "label": "img 4" },
+                    { "value": 5, "label": "img 5" },
+                    { "value": 6, "label": "img 6" }
+                  ]
+                },
+                {
                   "name": "fileUpload",
                   "label": "Upload File",
                   "type": "file",
@@ -194,6 +207,19 @@
                   "label": "Title",
                   "type": "text",
                   "placeholder": "Enter title"
+                },
+                {
+                  "name": "imageType",
+                  "label": "Select Type",
+                  "type": "select",
+                  "options": [
+                    { "value": 1, "label": "img 1" },
+                    { "value": 2, "label": "img 2" },
+                    { "value": 3, "label": "img 3" },
+                    { "value": 4, "label": "img 4" },
+                    { "value": 5, "label": "img 5" },
+                    { "value": 6, "label": "img 6" }
+                  ]
                 },
                 {
                   "name": "fileUpload",
