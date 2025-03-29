@@ -70,8 +70,8 @@ const handleTodoChange = (index, fieldName, value) => {
             </button>
 
             {formSchema?.map((field, index) => (
-              <div key={index} className="mt-3">
-                <label className="block mb-1">{field.label}</label>
+              <div key={index} className="mt-3 !text-[#000] ">
+                <label className="block mb-1 text-[#000] ">{field.label}</label>
 
                 {field.type === "text" && (
                   <input

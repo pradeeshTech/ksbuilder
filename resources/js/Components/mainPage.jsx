@@ -8,6 +8,7 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
 
   const [sectionId, setSectionId] = useState();
   const [contentDetails, setContentDetails] = useState([]);
+  const [contentSectionTarget, setContentSectionTarget] = useState(0);
   const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
   const fetchContentDetails = async () => {
@@ -37,6 +38,7 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
       2: formSchema?.HomePage3,
       3: formSchema?.HomePage4,
       4: formSchema?.HomePage5,
+      5: formSchema?.HomePage6,
     }
 
     return format[key]
@@ -97,16 +99,17 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
   function SaveForm(data) {
     console.log(data, 'data :::');
     const actions = {
-      1: CreateOrUpdate,
-      2: SaveSection2,
-      3: saveSection3,
-      4: saveSection4,
-      5: saveSection4,
+      '1 Section': CreateOrUpdate,
+      '2 section': SaveSection2,
+      '3 section': saveSection3,
+      '4 section': saveSection4,
+      '5 section': saveSection4,
+      '6 section': saveSection4,
     }
     // sdsd
 
 
-    actions[sectionId]?.(data, sectionId);
+    actions[contentSectionTarget]?.(data, sectionId);
   }
 
   async function SaveSection2(data, sectionId) {
@@ -144,6 +147,8 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
 
     // Always append `id`
     formData.append("id", sectionId);
+    // formData.append("section_id", sectionId);
+    // Ensure this is defined
 
     // Append each field individually
     formData.append("image1_path", format[data?.imageType || 1].image1_path || "");
@@ -217,6 +222,7 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
   }
 
   async function saveSection4(data, sectionId) {
+    console.log(sectionId, 'sectionId ::')
 
     let format = {
       1: { image1_path: "", image1_name: "" },
@@ -240,11 +246,12 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
       format[data?.imageType || 1][keyPathName] = data?.sub_title || ""; // Store title
     }
 
-    console.log(format, 'format ::');
+    // console.log(format, 'format ::');
 
     const formData = new FormData();
     // Always append `id`
     formData.append("id", sectionId);
+
     formData.append("title", data?.title);
     // Append each field individually
     formData.append("image1_path", format[data?.imageType || 1].image1_path || "");
@@ -260,7 +267,7 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
     formData.append("image6_path", format[data?.imageType || 1].image6_path || "");
     formData.append("image6_name", format[data?.imageType || 1].image6_name || "");
 
-    console.log(formData, 'formData ::');
+    // console.log(formData, 'formData ::');
 
     try {
       const response = await fetch("http://127.0.0.1:8000/update-content", {
@@ -287,6 +294,11 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
   }
 
 
+  function findObject(targetName) {
+    return contentDetails.find(section => section.section_name.toLowerCase().trim() === targetName.toLowerCase().trim());
+  }
+
+
 
 
   return (
@@ -296,9 +308,9 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
 
         {/* 1 section */}
 
-        <div className=" flex justify-start items-center " onClick={() => { setSectionId(1) }}>
+        <div className=" flex justify-start items-center " onClick={() => { setContentSectionTarget('1 Section'), setSectionId(findObject('1 Section')?.section_content?.[0]?.id) }}>
           <h1 className=" text-[24px] font-semibold my-2 "  >1 Section</h1>
-          {sectionId}
+          {/* {sectionId} */}
           {<DynamicForm formSchema={formRendering(0)} onSubmit={SaveForm} />}
           <div>
 
@@ -316,7 +328,7 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
         {/* 2 section */}
 
         <div className="mt-[80px]" >
-          <div className=" flex justify-start items-center" onClick={() => { setSectionId(2) }}  >
+          <div className=" flex justify-start items-center" onClick={() => { setContentSectionTarget('2 section'), setSectionId(findObject('2 section')?.section_content?.[0]?.id) }}  >
             <h1 className="text-[24px] font-semibold ">2 Section</h1>
             {<DynamicForm formSchema={formRendering(1)} onSubmit={SaveForm} />}
           </div>
@@ -373,7 +385,7 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
         {/* {JSON.stringify(contentDetails?.[2].section_content[0]?.title)} */}
 
         <div className="mt-[80px]" >
-          <div className=" flex justify-start items-center" onClick={() => { setSectionId(3) }} >
+          <div className=" flex justify-start items-center" onClick={() => { setContentSectionTarget('3 section'), setSectionId(findObject('3 Section')?.section_content?.[0]?.id) }} >
             <h1 className="text-[24px] font-semibold ">3 Section</h1>
             {<DynamicForm formSchema={formRendering(2)} onSubmit={SaveForm} />}
           </div>
@@ -393,7 +405,7 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
         {/* 4 section */}
 
         <div className=" mt-[80px] " >
-          <div className=" flex justify-start items-center" onClick={() => { setSectionId(4) }} >
+          <div className=" flex justify-start items-center" onClick={() => { setContentSectionTarget('4 section'), setSectionId(findObject('4 Section')?.section_content?.[0]?.id) }} >
             <h1 className="text-[24px] font-semibold ">{contentDetails?.[3]?.section_content?.[0]?.title || 'FEATURED PROJECTS'} </h1>
             {<DynamicForm formSchema={formRendering(3)} onSubmit={SaveForm} />}
           </div>
@@ -455,20 +467,19 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
 
         {/* 5 section */}
 
-        <div className="my-[100px] border border-[#000] " >
+        <div className="my-[100px]" >
           <h1> </h1>
-          <div className=" flex justify-start items-center" onClick={() => { setSectionId(5) }}  >
+          <div className=" flex justify-start items-center" onClick={() => { setContentSectionTarget('5 section'), setSectionId(findObject('5 Section')?.section_content?.[0]?.id) }}  >
             <h1 className="text-[24px] font-semibold ">5 section</h1>
             {<DynamicForm formSchema={formRendering(4)} onSubmit={SaveForm} />}
           </div>
-          <h1 className=" my-2  text-[24px]  " >CLIENTS</h1>
-
+          <h1 className=" my-2  text-[24px]  " >{contentDetails?.[4]?.section_content?.title || 'CLIENTS'}</h1>
           <div className=" grid grid-cols-5 gap-5 my-4 border-gray-300 border-y-[1px] py-10 " >
             <div className=" border shadow-sm rounded-md h-[100px] text-start" >
               <img src={contentDetails?.[4]?.section_content?.[0]?.image1_path} alt="" className="w-[100%] h-[100%]  " />
             </div>
             <div className=" border shadow-sm rounded-md  h-[100px]   " >
-              <img src={contentDetails?.[4]?.section_content?.[0]?.image25_path} alt="" className="w-[100%] h-[100%]  " />
+              <img src={contentDetails?.[4]?.section_content?.[0]?.image2_path} alt="" className="w-[100%] h-[100%]  " />
             </div>
             <div className=" border shadow-sm rounded-md  h-[100px]  " >
               <img src={contentDetails?.[4]?.section_content?.[0]?.image3_path} alt="" className="w-[100%] h-[100%]  " />
@@ -481,22 +492,35 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
             </div>
           </div>
         </div>
-
       </div>
 
       <div className=" bg-[#000] p-4 text-[#fff] " >
-
-        <div className=" flex justify-start items-center" >
+        <div className=" flex justify-start items-center" onClick={() => { setContentSectionTarget('6 section'), setSectionId(findObject('6 Section')?.section_content?.[0]?.id) }} >
           <h1 className="text-[24px] font-semibold "> 6  section</h1>
-          {<DynamicForm formSchema={formRendering(5)} />}
+          {<DynamicForm formSchema={formRendering(5)} onSubmit={SaveForm} />}
         </div>
         <h1 className=" my-2 " >Insta</h1>
         <div className=" grid grid-cols-3  h-[240px] gap-4 " >
-          <div className=" bg-[#fff] rounded-lg  " >
+          <div className=" bg-[#fff] rounded-lg  h-[240px]  " >
+            {contentDetails?.[5]?.section_content?.[0]?.image1_name &&
+              <a href={contentDetails?.[5]?.section_content?.[0]?.image1_name} target="_blank">
+                <img src={contentDetails?.[5]?.section_content?.[0]?.image1_path} alt="" className="w-[100%] h-[100%] object-fit rounded-lg
+                  " />
+              </a>
+            }
           </div>
-          <div className=" bg-[#fff] rounded-lg" >
+          <div className=" bg-[#fff] rounded-lg h-[240px] " >
+            {contentDetails?.[5]?.section_content?.[0]?.image2_name &&
+              <a href={contentDetails?.[5]?.section_content?.[0]?.image2_name} target="_blank" >
+                <img src={contentDetails?.[5]?.section_content?.[0]?.image2_path} alt="" className="w-[100%] h-[100%] object-fit rounded-lg" />
+              </a>}
           </div>
-          <div className=" bg-[#fff] rounded-lg" >
+          <div className=" bg-[#fff] rounded-lg  h-[240px] " >
+            {contentDetails?.[5]?.section_content?.[0]?.image3_name &&
+              <a href={contentDetails?.[5]?.section_content?.[0]?.image3_name} target="_blank">
+                <img src={contentDetails?.[5]?.section_content?.[0]?.image3_path} alt="" className="w-[100%] h-[100%] object-fit rounded-lg" />
+              </a>
+            }
           </div>
         </div>
       </div>

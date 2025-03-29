@@ -227,5 +227,59 @@
                   "type": "file",
                   "accept": "image/*,video/*"
                 }
+      ],
+      "HomePage6":[
+        {
+              "name": "sub_title",
+              "label": "URL",
+              "type": "text",
+              "placeholder": "Enter title"
+            },
+            {
+              "name": "imageType",
+              "label": "Select Type",
+              "type": "select",
+              "options": [
+                { "value": 1, "label": "img 1" },
+                { "value": 2, "label": "img 2" },
+                { "value": 3, "label": "img 3" },
+                { "value": 4, "label": "img 4" },
+                { "value": 5, "label": "img 5" },
+                { "value": 6, "label": "img 6" }
+              ]
+            },
+            {
+              "name": "fileUpload",
+              "label": "Upload File",
+              "type": "file",
+              "accept": "image/*,video/*"
+            }
+  ],
+  "About":[
+    {
+      "name": "title",
+      "label": "Title",
+      "type": "text",
+      "placeholder": "Enter title"
+    },
+    {
+          "name": "sub_title",
+          "label": "Sub Title",
+          "type": "text",
+          "placeholder": "Enter Sub title"
+        },
+        {
+          "name": "imageType",
+          "label": "Select Type",
+          "type": "select",
+          "options": [
+            { "value": 1, "label": "Content 1" },
+            { "value": 2, "label": "Content 2" },
+            { "value": 3, "label": "Content 3" },
+            { "value": 4, "label": "Content 4" },
+            { "value": 5, "label": "Content 5" },
+            { "value": 6, "label": "Content 6" }
+          ]
+        }
       ]
 }
