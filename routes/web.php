@@ -20,7 +20,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::get('get-content',[ContentController::class,'getPageContent'])->name('get-content');
+Route::get('get-content/{PageId}',[ContentController::class,'getPageContent'])->name('get-content');
 Route::get('get-nav-bar',[ContentController::class,'getNavBar'])->name('get-nav-bar');
 Route::post('save-content',[ContentController::class,'saveContent'])->name('save-content');
 Route::post('update-content',[ContentController::class,'updateContent'])->name('update-content');

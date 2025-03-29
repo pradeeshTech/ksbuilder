@@ -6,12 +6,21 @@ use Illuminate\Http\Request;
 use App\Models\Section;
 use App\Models\NavBar;
 use App\Models\Content;
+use Illuminate\Support\Facades\Validator;
 
 class ContentController extends Controller
 {
-    public function getPageContent(Request $request)
+    public function getPageContent(Request $request, $pageId)
     {
-        $pageId = 1;
+
+        $validator = Validator::make(['pageId' => $pageId], [
+            'pageId' => 'required|exists:navbar,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+        
         $content = Section::where('nav_id', $pageId)->with('sectionContent')->get();
         foreach ($content as $singleSection) {
             foreach ($singleSection->sectionContent as $singleContent) {
@@ -23,7 +32,7 @@ class ContentController extends Controller
                 $singleContent->image6_path = $singleContent->image6_path ? asset($singleContent->image6_path) : $singleContent->image6_path;
             }
         }
-        return $content;
+        return $content ? $content : null;
     }
 
     public function getNavBar(Request $request)
@@ -125,7 +134,7 @@ class ContentController extends Controller
         // ]);
         //  dd($request->all());
         $content = Content::find($request->id);
-        if(!$content){
+        if (!$content) {
             return response()->json(['message' => 'Content not found'], 404);
         }
 
