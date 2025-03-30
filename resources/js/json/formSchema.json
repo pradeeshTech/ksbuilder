@@ -269,6 +269,18 @@
           "placeholder": "Enter Sub title"
         },
         {
+          "name": "content",
+          "label": "Description",
+          "type": "textarea",
+          "placeholder": "Enter description"
+        },
+        {
+          "name": "fileUpload",
+          "label": "Upload File",
+          "type": "file",
+          "accept": "image/*,video/*"
+        },
+        {
           "name": "imageType",
           "label": "Select Type",
           "type": "select",

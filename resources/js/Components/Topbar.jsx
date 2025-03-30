@@ -17,7 +17,7 @@ export default function TopBar({updateTabIndex}) {
         <div className=" pt-[40px] text-[50px] text-[#0693e3]  " >
      KSK Builder
      </div>
-     <div className="" >
+     <div className=" min-[935px]:hidden " >
       <button className=" bg-[#eeeeee] px-[4px] py-[4px] " >
         Menu <i className="pi pi-bars px-2 " ></i>
       </button>

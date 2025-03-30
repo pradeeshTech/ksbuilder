@@ -11,21 +11,27 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
   const [contentSectionTarget, setContentSectionTarget] = useState(0);
   const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-  const fetchContentDetails = async () => {
-    try {
-      const response = await fetch("http://127.0.0.1:8000/get-content");
-      const data = await response.json();
-      console.log(data, 'data ::')
-      setContentDetails(data);
-      // setWifiName(data || "Not connected");
-    } catch (error) {
-      // setWifiName("Failed to fetch WiFi name.");
-      console.error("Error fetching WiFi SSID:", error);
-    }
-  };
+  // const [useRoute,setUseRoute] = useState(false);
+
+const fetchContentDetails = async (pageId) => {
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/get-content/${pageId}`, {
+      method: "GET",  // Ensure GET is used
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+    console.log(data, "data ::");
+    setContentDetails(data);
+  } catch (error) {
+    console.error("Error fetching", error);
+  }
+}
 
   useEffect(() => {
-    fetchContentDetails();
+    fetchContentDetails(1);
   }, []);
   const TextComponent = (data) => {
     return <div dangerouslySetInnerHTML={{ __html: data?.replace(/\n/g, "<br />") }} />;
@@ -80,7 +86,7 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
       }
       // 
       const data = await response.json();
-      fetchContentDetails();
+      fetchContentDetails(1);
       // console.log(format, "Create Or Update ::");
     } catch (error) {
       console.error("Error creating or updating content:", error);
@@ -178,7 +184,7 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
       }
 
       const res = await response.json();
-      fetchContentDetails();
+      fetchContentDetails(1);
       // console.log(res, "payload ::");
     } catch (error) {
       console.error("Error in SaveSection2:", error);
@@ -217,7 +223,7 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
       console.error("Error in SaveSection2:", error);
     }
 
-    fetchContentDetails();
+    fetchContentDetails(1);
 
   }
 
@@ -283,13 +289,13 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
       }
 
       const res = await response.json();
-      fetchContentDetails();
+      fetchContentDetails(1);
       // console.log(res, "payload ::");
     } catch (error) {
       console.error("Error in SaveSection2:", error);
     }
 
-    fetchContentDetails();
+    fetchContentDetails(1);
 
   }
 
@@ -298,16 +304,25 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
     return contentDetails.find(section => section.section_name.toLowerCase().trim() === targetName.toLowerCase().trim());
   }
 
+  function routeUrl(){
+    if(window.location.pathname === "/" && window.location.href != undefined){
+     return false
+    }
+    else{
+      return true
+    }
+  }
+
 
 
 
   return (
     <div>
       <div className=" px-[5%]" >
-        {/*  */}
+        {/*  */}   
 
         {/* 1 section */}
-
+{routeUrl() &&
         <div className=" flex justify-start items-center " onClick={() => { setContentSectionTarget('1 Section'), setSectionId(findObject('1 Section')?.section_content?.[0]?.id) }}>
           <h1 className=" text-[24px] font-semibold my-2 "  >1 Section</h1>
           {/* {sectionId} */}
@@ -315,7 +330,7 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
           <div>
 
           </div>
-        </div>
+        </div>}
         <div>
           <h1 className=" my-4 font-bold border-b-[1px] border-gray-300 pb-2 text-[#333333]  " >
             {contentDetails?.[0]?.section_content?.[0]?.title || ''}</h1>
@@ -328,10 +343,11 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
         {/* 2 section */}
 
         <div className="mt-[80px]" >
+        {routeUrl() &&
           <div className=" flex justify-start items-center" onClick={() => { setContentSectionTarget('2 section'), setSectionId(findObject('2 section')?.section_content?.[0]?.id) }}  >
             <h1 className="text-[24px] font-semibold ">2 Section</h1>
             {<DynamicForm formSchema={formRendering(1)} onSubmit={SaveForm} />}
-          </div>
+          </div>}
 
           <div className="" >
             {contentDetails?.[1]?.section_content?.[0]?.image1_name &&
@@ -385,10 +401,11 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
         {/* {JSON.stringify(contentDetails?.[2].section_content[0]?.title)} */}
 
         <div className="mt-[80px]" >
+        {routeUrl() &&
           <div className=" flex justify-start items-center" onClick={() => { setContentSectionTarget('3 section'), setSectionId(findObject('3 Section')?.section_content?.[0]?.id) }} >
             <h1 className="text-[24px] font-semibold ">3 Section</h1>
             {<DynamicForm formSchema={formRendering(2)} onSubmit={SaveForm} />}
-          </div>
+          </div>}
           <div className=" grid grid-cols-2 gap-5 " >
             <div className=" border-[1px] border-gray-200 shadow-lg h-[281px] " >
               <img src={contentDetails?.[2]?.section_content?.[0]?.image1_path} className=" object-cover w-[100%] h-[100%] " alt="" />
@@ -405,10 +422,11 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
         {/* 4 section */}
 
         <div className=" mt-[80px] " >
+        {routeUrl() &&
           <div className=" flex justify-start items-center" onClick={() => { setContentSectionTarget('4 section'), setSectionId(findObject('4 Section')?.section_content?.[0]?.id) }} >
             <h1 className="text-[24px] font-semibold ">{contentDetails?.[3]?.section_content?.[0]?.title || 'FEATURED PROJECTS'} </h1>
             {<DynamicForm formSchema={formRendering(3)} onSubmit={SaveForm} />}
-          </div>
+          </div>}
           <div className=" grid grid-cols-3 w-[100%] gap-4" >
 
             {contentDetails?.[3]?.section_content?.[0]?.image1_path &&
@@ -468,11 +486,12 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
         {/* 5 section */}
 
         <div className="my-[100px]" >
-          <h1> </h1>
+        {routeUrl() &&
           <div className=" flex justify-start items-center" onClick={() => { setContentSectionTarget('5 section'), setSectionId(findObject('5 Section')?.section_content?.[0]?.id) }}  >
             <h1 className="text-[24px] font-semibold ">5 section</h1>
             {<DynamicForm formSchema={formRendering(4)} onSubmit={SaveForm} />}
           </div>
+          }
           <h1 className=" my-2  text-[24px]  " >{contentDetails?.[4]?.section_content?.title || 'CLIENTS'}</h1>
           <div className=" grid grid-cols-5 gap-5 my-4 border-gray-300 border-y-[1px] py-10 " >
             <div className=" border shadow-sm rounded-md h-[100px] text-start" >
@@ -495,10 +514,11 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
       </div>
 
       <div className=" bg-[#000] p-4 text-[#fff] " >
+      {routeUrl() &&
         <div className=" flex justify-start items-center" onClick={() => { setContentSectionTarget('6 section'), setSectionId(findObject('6 Section')?.section_content?.[0]?.id) }} >
           <h1 className="text-[24px] font-semibold "> 6  section</h1>
           {<DynamicForm formSchema={formRendering(5)} onSubmit={SaveForm} />}
-        </div>
+        </div>}
         <h1 className=" my-2 " >Insta</h1>
         <div className=" grid grid-cols-3  h-[240px] gap-4 " >
           <div className=" bg-[#fff] rounded-lg  h-[240px]  " >

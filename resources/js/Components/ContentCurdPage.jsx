@@ -164,21 +164,6 @@ function formRendering(key){
     </ul>
  
       </div>
-
-      <div className="flex justify-center items-center " >
-        <button
-          className="bg-blue-300 text-black rounded-[24px] text-[12px] w-[80px] h-[35px] mx-2"
-          onClick={() => setIsOpen(true)}
-        >
-          {edit ? "Edit" : "Cancel"}
-        </button>
-        <button
-          className="bg-[#2d2d2d] text-white rounded-[24px] text-[12px] w-[80px] h-[35px]"
-          onClick={() => setIsOpen(false)}
-        >
-          Save
-        </button>
-      </div>
       </div>
 
       <div>
