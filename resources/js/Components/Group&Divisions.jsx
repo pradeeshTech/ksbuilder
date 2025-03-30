@@ -10,7 +10,7 @@ export default function GroupDivisions() {
   const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
   const fetchContentDetails = async (pageId) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/get-content/${pageId}`, {
+      const response = await fetch(`https://ksbuilder.wolfczartech.net/get-content/${pageId}`, {
         method: "GET",  // Ensure GET is used
         headers: {
           "Content-Type": "application/json",
@@ -95,7 +95,7 @@ export default function GroupDivisions() {
     formData.append("image6_name", format[data?.imageType || 1].image6_name || "");
     // console.log(formData, 'formData ::');
     try {
-      const response = await fetch("http://127.0.0.1:8000/update-content", {
+      const response = await fetch("https://ksbuilder.wolfczartech.net/update-content", {
         method: "POST",
         headers: {
           "X-CSRF-TOKEN": csrfToken, // Ensure csrfToken is defined

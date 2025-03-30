@@ -24,7 +24,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchWifiName = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/get-content");
+        const response = await fetch("https://ksbuilder.wolfczartech.net/get-content");
         const data = await response.json();
         console.log(data,'data ::')
         setFormData(data);
