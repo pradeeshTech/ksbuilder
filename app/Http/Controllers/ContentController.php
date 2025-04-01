@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use Illuminate\Http\Request;
 use App\Models\Section;
 use App\Models\NavBar;
@@ -20,7 +21,7 @@ class ContentController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
-        
+
         $content = Section::where('nav_id', $pageId)->with('sectionContent')->get();
         foreach ($content as $singleSection) {
             foreach ($singleSection->sectionContent as $singleContent) {
@@ -209,5 +210,46 @@ class ContentController extends Controller
             }
         }
         return $contents;
+    }
+
+    public function updateAddress(Request $request)
+    {
+        $validator = Validator::make([$request->all()], [
+            'id'=>'required|exists:address,id',
+            'address_line_1'=>'required',
+            'address_line_2'=>'nullable',
+            'city'=>'required',
+            'state'=>'required',
+            'country'=>'required',
+            'postal_code'=>'required',
+            'phone_number'=>'nullable',
+            'phone_2'=>'nullable',
+            'email_address'=>'required',
+            'google_map_url'=>'required',
+            'is_default'=>'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $address = Address::find($request->id);
+        $address->address_line_1 = $request->address_line_1;
+        $address->address_line_2 = $request->address_line_2;
+        $address->is_default = $request->is_default;
+        $address->city = $request->city;
+        $address->state = $request->state;
+        $address->country = $request->country;
+        $address->postal_code = $request->postal_code;
+        $address->phone_number = $request->phone_number;
+        $address->phone_2 = $request->phone_2;
+        $address->email_address = $request->email_address;
+        $address->google_map_url = $request->google_map_url;
+        $address->save();
+    }
+
+    public function getAddress(Request $request){
+        $address = Address::all();
+        return $address;
     }
 }

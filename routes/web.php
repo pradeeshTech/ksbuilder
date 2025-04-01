@@ -24,6 +24,8 @@ Route::get('get-content/{PageId}',[ContentController::class,'getPageContent'])->
 Route::get('get-nav-bar',[ContentController::class,'getNavBar'])->name('get-nav-bar');
 Route::post('save-content',[ContentController::class,'saveContent'])->name('save-content');
 Route::post('update-content',[ContentController::class,'updateContent'])->name('update-content');
+Route::post('update-address',[ContentController::class,'updateAddress'])->name('update-address');
+Route::get('getAddress',[ContentController::class,'getAddress'])->name('getAddress');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
