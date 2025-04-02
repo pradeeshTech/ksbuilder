@@ -16,7 +16,7 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
 
 const fetchContentDetails = async (pageId) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/${pageId}`, {
+    const response = await fetch(`${API_BASE_URL}/get-content/${pageId}`, {
       method: "GET",  // Ensure GET is used
       headers: {
         "Content-Type": "application/json",
