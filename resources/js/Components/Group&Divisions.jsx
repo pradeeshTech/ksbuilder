@@ -8,9 +8,11 @@ export default function GroupDivisions() {
   const [contentDetails, setContentDetails] = useState([]);
   const [contentSectionTarget, setContentSectionTarget] = useState(0);
   const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const fetchContentDetails = async (pageId) => {
     try {
-      const response = await fetch(`https://ksbuilder.wolfczartech.net/get-content/${pageId}`, {
+      const response = await fetch(`${API_BASE_URL}/get-content/${pageId}`, {
         method: "GET",  // Ensure GET is used
         headers: {
           "Content-Type": "application/json",
@@ -95,7 +97,7 @@ export default function GroupDivisions() {
     formData.append("image6_name", format[data?.imageType || 1].image6_name || "");
     // console.log(formData, 'formData ::');
     try {
-      const response = await fetch("https://ksbuilder.wolfczartech.net/update-content", {
+      const response = await fetch(`${API_BASE_URL}/update-content`, {
         method: "POST",
         headers: {
           "X-CSRF-TOKEN": csrfToken, // Ensure csrfToken is defined

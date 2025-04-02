@@ -5,6 +5,7 @@ import DynamicForm from "./PopUp";
 import formSchema from "@/json/formSchema";
 
 export default function MainPage({ Section1, Section2, Section3, Section4, Section5 }) {
+  const API_BASE_URL =import.meta.env.VITE_API_BASE_URL;
 
   const [sectionId, setSectionId] = useState();
   const [contentDetails, setContentDetails] = useState([]);
@@ -15,7 +16,7 @@ export default function MainPage({ Section1, Section2, Section3, Section4, Secti
 
 const fetchContentDetails = async (pageId) => {
   try {
-    const response = await fetch(`https://ksbuilder.wolfczartech.net/get-content/${pageId}`, {
+    const response = await fetch(`${API_BASE_URL}/${pageId}`, {
       method: "GET",  // Ensure GET is used
       headers: {
         "Content-Type": "application/json",
@@ -72,7 +73,7 @@ const fetchContentDetails = async (pageId) => {
         image6_name: "",
       };
 
-      const response = await fetch("https://ksbuilder.wolfczartech.net/update-content", {
+      const response = await fetch(`${API_BASE_URL}/update-content`, {
         method: "POST", // Ensure it's POST
         headers: {
           "Content-Type": "application/json",
@@ -171,7 +172,7 @@ const fetchContentDetails = async (pageId) => {
     formData.append("image6_name", format[data?.imageType || 1].image6_name || "");
 
     try {
-      const response = await fetch("https://ksbuilder.wolfczartech.net/update-content", {
+      const response = await fetch(`${API_BASE_URL}/update-content`, {
         method: "POST",
         headers: {
           "X-CSRF-TOKEN": csrfToken, // Ensure csrfToken is defined
@@ -206,7 +207,7 @@ const fetchContentDetails = async (pageId) => {
 
     // console.log(formData,'formData :: ');
     try {
-      const response = await fetch("https://ksbuilder.wolfczartech.net/update-content", {
+      const response = await fetch(`${API_BASE_URL}/update-content`, {
         method: "POST",
         headers: {
           "X-CSRF-TOKEN": csrfToken, // Ensure csrfToken is defined
@@ -276,7 +277,7 @@ const fetchContentDetails = async (pageId) => {
     // console.log(formData, 'formData ::');
 
     try {
-      const response = await fetch("https://ksbuilder.wolfczartech.net/update-content", {
+      const response = await fetch(`${API_BASE_URL}/update-content`, {
         method: "POST",
         headers: {
           "X-CSRF-TOKEN": csrfToken, // Ensure csrfToken is defined

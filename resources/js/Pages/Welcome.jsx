@@ -10,6 +10,8 @@ import GroupDivisions from "@/Components/Group&Divisions";
 import ContactUs from "@/Components/ContactUs";
 import StaffAccess from "@/Components/Staff&Access";
 import home from "@/json/home.json";
+const API_BASE_URL =import.meta.env.VITE_API_BASE_URL;
+
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     // const handleImageError = () => {
@@ -31,7 +33,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
   useEffect(() => {
     const fetchWifiName = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/get-content");
+        const response = await fetch(`${API_BASE_URL}/get-content/${1}`);
         const data = await response.json();
         console.log(data,'data ::')
         setFormData(data);
