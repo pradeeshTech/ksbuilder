@@ -21,22 +21,22 @@ export default function HomePage() {
 
   const modalRef = useRef();
 
-  useEffect(() => {
-    const fetchWifiName = async () => {
-      try {
-        const response = await fetch("https://ksbuilder.wolfczartech.net/get-content");
-        const data = await response.json();
-        console.log(data,'data ::')
-        setFormData(data);
-        // setWifiName(data || "Not connected");
-      } catch (error) {
-        // setWifiName("Failed to fetch WiFi name.");
-        console.error("Error fetching WiFi SSID:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchWifiName = async () => {
+  //     try {
+  //       const response = await fetch("https://ksbuilder.wolfczartech.net/get-content");
+  //       const data = await response.json();
+  //       console.log(data,'data ::')
+  //       setFormData(data);
+  //       // setWifiName(data || "Not connected");
+  //     } catch (error) {
+  //       // setWifiName("Failed to fetch WiFi name.");
+  //       console.error("Error fetching WiFi SSID:", error);
+  //     }
+  //   };
 
-    fetchWifiName();
-  }, []);
+  //   fetchWifiName();
+  // }, []);
 
   let curd_json = {
     page_type:"home",

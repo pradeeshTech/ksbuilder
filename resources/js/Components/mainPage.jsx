@@ -314,6 +314,20 @@ const fetchContentDetails = async (pageId) => {
     }
   }
 
+  async function getAddress(){
+    const response = await fetch(`${API_BASE_URL}/getAddress`, {
+      method: "GET",  // Ensure GET is used
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(response,'response ::');
+  }
+
+  useEffect(()=>{
+    getAddress();
+  },[]);
+
 
 
 
@@ -523,28 +537,29 @@ const fetchContentDetails = async (pageId) => {
         <h1 className=" my-2 " >Insta</h1>
         <div className=" grid grid-cols-3  h-[240px] gap-4 " >
           <div className=" bg-[#fff] rounded-lg  h-[240px]  " >
-            {contentDetails?.[5]?.section_content?.[0]?.image1_name &&
-              <a href={contentDetails?.[5]?.section_content?.[0]?.image1_name} target="_blank">
+            {contentDetails?.[5]?.section_content?.[0]?.image1_path &&
+              <a href={contentDetails?.[5]?.section_content?.[0]?.image1_path} target="_blank">
                 <img src={contentDetails?.[5]?.section_content?.[0]?.image1_path} alt="" className="w-[100%] h-[100%] object-fit rounded-lg
                   " />
               </a>
             }
           </div>
           <div className=" bg-[#fff] rounded-lg h-[240px] " >
-            {contentDetails?.[5]?.section_content?.[0]?.image2_name &&
-              <a href={contentDetails?.[5]?.section_content?.[0]?.image2_name} target="_blank" >
+            {contentDetails?.[5]?.section_content?.[0]?.image2_path &&
+              <a href={contentDetails?.[5]?.section_content?.[0]?.image2_path} target="_blank" >
                 <img src={contentDetails?.[5]?.section_content?.[0]?.image2_path} alt="" className="w-[100%] h-[100%] object-fit rounded-lg" />
               </a>}
           </div>
           <div className=" bg-[#fff] rounded-lg  h-[240px] " >
-            {contentDetails?.[5]?.section_content?.[0]?.image3_name &&
-              <a href={contentDetails?.[5]?.section_content?.[0]?.image3_name} target="_blank">
+            {contentDetails?.[5]?.section_content?.[0]?.image3_path &&
+              <a href={contentDetails?.[5]?.section_content?.[0]?.image3_path} target="_blank">
                 <img src={contentDetails?.[5]?.section_content?.[0]?.image3_path} alt="" className="w-[100%] h-[100%] object-fit rounded-lg" />
               </a>
             }
           </div>
         </div>
       </div>
+      dsiudsoi 
       <Footer />
 
     </div>

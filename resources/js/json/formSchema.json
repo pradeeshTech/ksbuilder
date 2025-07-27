@@ -253,6 +253,30 @@
               "label": "Upload File",
               "type": "file",
               "accept": "image/*,video/*"
+            }],
+
+      "HomePage7":[
+            {
+                  "name": "title",
+                  "label": "Title",
+                  "type": "text",
+                  "placeholder": "Enter title"
+                },
+                  {
+                  "name": "content",
+                  "label": "Sub Title",
+                  "type": "textarea",
+                  "placeholder": "Sub Title"
+                },
+            {
+              "name": "imageType",
+              "label": "Select Type",
+              "type": "select",
+              "options": [
+                { "value": 1, "label": "content 1" },
+                { "value": 2, "label": "content 2" },
+                { "value": 3, "label": "content 3" }
+              ]
             }
   ],
   "About":[

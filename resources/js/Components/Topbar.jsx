@@ -14,7 +14,7 @@ export default function TopBar({updateTabIndex}) {
     <>
       <div className=" px-[5%]" >
         <div className=" flex justify-between items-center " >
-        <div className=" pt-[40px] text-[50px] text-[#0693e3]  " >
+        <div className=" pt-[40px] text-[50px] text-[#0693e3] font-semibold  " >
      KSK Builder
      </div>
      <div className=" min-[935px]:hidden " >
